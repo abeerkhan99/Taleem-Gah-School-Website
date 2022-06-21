@@ -1,0 +1,2 @@
+# Taleem-Gah-School-Website
+The project is to make a website for Taleem Gah - a school for underprivileged children. The school has bottlenecks with dealing with students' grades and assessing the institution's finances, due to their records being kept on paper, therefore the aim is to help the school with this website project. The website will include a financial account, where their budget and donors can be reviewed, as well as an academic account, where teachers and administrators will be able to view and input students’ grades to generate student performance reports.
