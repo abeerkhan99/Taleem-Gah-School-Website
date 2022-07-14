@@ -14,26 +14,29 @@ def main():
     subjects = ['Math', 'History', 'Chemistry', 'Biology', 'Physics', 'English', 'Computer Science']
     page1Columns = ['Subject', 'Teacher Name', 'Grade']
     page1Data = []
+
     for i in range(len(subjects)): 
         page1Data.append(['Jack Smith', str(i*10)])
 
-    handleSheet(page1Title, page1Columns, page1Data, subjects)
+    init()
+    details()
+    grades(page1Title, page1Columns, page1Data, subjects)
     
     pdf.output('PDF Reports/test_report.pdf', 'F')
 
-def handleSheet(sheetTitle, columnNamesArr, dataArr, subjects):
+def grades(sheetTitle, columnNamesArr, dataArr, subjects):
     global pdf
     justification = 'C'
-    pdf.add_page('L')
 
     heading_index = 0
     sub_counter = 0
     data_counter = 0
+
     # Add page title
-    pdf.set_fill_color(255,255,255)
-    pdf.set_text_color(0,0,0)
-    pdf.set_font('Times', 'bu', 24)
-    pdf.cell(PORTRAIT_FULL_WIDTH, 12, sheetTitle, 0, 1, 'C')
+    # pdf.set_fill_color(255,255,255)
+    # pdf.set_text_color(0,0,0)
+    # pdf.set_font('Times', 'bu', 24)
+    # pdf.cell(PORTRAIT_FULL_WIDTH, 12, sheetTitle, 0, 1, 'C')
 
     pdf.set_font('Arial', '', 12)
     
@@ -81,6 +84,57 @@ def handleSheet(sheetTitle, columnNamesArr, dataArr, subjects):
         if not heading_index%2:
             pdf.ln(4)
         
+def init():
+    global pdf
+    pdf.add_page('L')
+
+def details():
+    global pdf
+    pdf.set_font('Arial', '', 10)
+    width = 15
+    height = 5
+    pdf.cell(width, height, 'Name:', 0, 0, 'L')
+
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, 'Jack Smith', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'Age:', 0, 0, 'L')
+
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, '20', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'Address:', 0, 0, 'L')
+
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, '123 Main St', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'City:', 0, 0, 'L')
+
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, 'New York', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'State:', 0, 0, 'L')
+    
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, 'NY', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'Zip:', 0, 0, 'L')
+    
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, '10001', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
+    pdf.cell(width, height, 'Phone:', 0, 0, 'L')
+    
+    pdf.set_font('Arial', 'U', 10)
+    pdf.cell(width, height, '123-456-7890', 0, 1, 'L')
+    pdf.set_font('Arial', '', 10)
+
 
 if __name__ == '__main__':
     main()
