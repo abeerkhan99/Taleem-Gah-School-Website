@@ -93,43 +93,62 @@ def details():
     pdf.set_font('Arial', '', 10)
     width = 15
     height = 5
-    pdf.cell(width, height, 'Name:', 0, 0, 'L')
+
+    # for i in range(5):
+
+    #     dist = pdf.get_string_width('Name: ')
+    #     pdf.cell(dist, height, 'Name:', 0, 0, 'L')
+
+    #     pdf.set_font('Arial', 'U', 10)
+    #     dist1 = pdf.get_string_width('Jack Smith ')
+    #     pdf.cell(dist1, height, 'Jack Smith', 0, 1, 'L')
+    #     pdf.set_font('Arial', '', 10)
+
+    # We can manually set bounds for all fields, input should be in list form so it works for either probably
+    dist = pdf.get_string_width('Name: ')
+    pdf.cell(dist, height, 'Name:', 0, 0, 'L')
 
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, 'Jack Smith', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'Age:', 0, 0, 'L')
+    dist = pdf.get_string_width('Age: ')
+    pdf.cell(dist, height, 'Age:', 0, 0, 'L')
 
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, '20', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'Address:', 0, 0, 'L')
+    dist = pdf.get_string_width('Address: ')
+    pdf.cell(dist, height, 'Address:', 0, 0, 'L')
 
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, '123 Main St', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'City:', 0, 0, 'L')
+    dist = pdf.get_string_width('City: ')
+    pdf.cell(dist, height, 'City:', 0, 0, 'L')
 
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, 'New York', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'State:', 0, 0, 'L')
+    dist = pdf.get_string_width('State: ')
+    pdf.cell(dist, height, 'State:', 0, 0, 'L')
     
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, 'NY', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'Zip:', 0, 0, 'L')
+    dist = pdf.get_string_width('Zip: ')
+    pdf.cell(dist, height, 'Zip:', 0, 0, 'L')
     
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, '10001', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
-    pdf.cell(width, height, 'Phone:', 0, 0, 'L')
+    dist = pdf.get_string_width('Phone: ')
+    pdf.cell(dist, height, 'Phone:', 0, 0, 'L')
     
     pdf.set_font('Arial', 'U', 10)
     pdf.cell(width, height, '123-456-7890', 0, 1, 'L')
