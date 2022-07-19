@@ -19,8 +19,9 @@ def main():
         page1Data.append(['Jack Smith', str(i*10)])
 
     init()
-    details()
+    details_hardcoded()
     grades(page1Title, page1Columns, page1Data, subjects)
+    sig()
     
     pdf.output('PDF Reports/test_report.pdf', 'F')
 
@@ -88,21 +89,28 @@ def init():
     global pdf
     pdf.add_page('L')
 
-def details():
+def details_dynamic():
+
     global pdf
     pdf.set_font('Arial', '', 10)
     width = 15
     height = 5
 
-    # for i in range(5):
+    for i in range(5):
 
-    #     dist = pdf.get_string_width('Name: ')
-    #     pdf.cell(dist, height, 'Name:', 0, 0, 'L')
+        dist = pdf.get_string_width('Name: ')
+        pdf.cell(dist, height, 'Name:', 0, 0, 'L')
 
-    #     pdf.set_font('Arial', 'U', 10)
-    #     dist1 = pdf.get_string_width('Jack Smith ')
-    #     pdf.cell(dist1, height, 'Jack Smith', 0, 1, 'L')
-    #     pdf.set_font('Arial', '', 10)
+        pdf.set_font('Arial', 'U', 10)
+        dist1 = pdf.get_string_width('Jack Smith ')
+        pdf.cell(dist1, height, 'Jack Smith', 0, 1, 'L')
+        pdf.set_font('Arial', '', 10)
+
+def details_hardcoded():
+    global pdf
+    pdf.set_font('Arial', '', 10)
+    width = 15
+    height = 5
 
     # We can manually set bounds for all fields, input should be in list form so it works for either probably
     dist = pdf.get_string_width('Name: ')
@@ -154,6 +162,15 @@ def details():
     pdf.cell(width, height, '123-456-7890', 0, 1, 'L')
     pdf.set_font('Arial', '', 10)
 
+
+def sig():
+
+    pdf.ln(10)
+    pdf.set_text_color(0,0,0)
+    dist = pdf.get_string_width('Signature: ')
+    pdf.cell(dist, 5, 'Signature:', 0, 0, 'L')
+    # add your own path here
+    pdf.image("C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg", pdf.get_x()+1, pdf.get_y()-5, 25, 0, 'JPEG')
 
 if __name__ == '__main__':
     main()
