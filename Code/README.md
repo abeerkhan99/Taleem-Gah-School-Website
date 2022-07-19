@@ -8,6 +8,8 @@
 - Flask (pip install flask)
 - Flask_Restfull package (pip install flask_restful)
 - Flask SQLAlchemy package (pip install flask_sqlalchemy)
+- psycopg2 package to connect with PostgreSQL database (pip install psycopg2)
+- PostgreSQL
 
 ### To Run app.py
 in CMD in the project directory:
