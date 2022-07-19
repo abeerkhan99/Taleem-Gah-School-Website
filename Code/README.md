@@ -12,4 +12,5 @@
 ### To Run app.py
 in CMD in the project directory:
 > set FLASK_APP = app.py
+
 > flask run
