@@ -31,7 +31,7 @@ body{
    margin-top: 250px;
 }
 
-.login{
+/* .login{
     background-color: white;
     border-radius: 8px;
   
@@ -41,7 +41,7 @@ body{
     font-family: 'Open Sans', sans-serif;
     border:none;
     outline: none;
-    padding-top: 18px;
+padding-top: 18px;
     padding-bottom: 18px;
     width: 220px;
 }
@@ -61,4 +61,52 @@ body{
     color: white;
     font-size: 16px;
 }
+ */
 
+/* Style inputs */
+  input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color: white;
+}
+
+/* Add a background color to the submit button on mouse-over */
+input[type=submit]:hover {
+  background-color: #45a049;
+  border-radius: 6px;
+}
+
+.footer p
+{
+  color: white;
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.footer p a
+{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+}
