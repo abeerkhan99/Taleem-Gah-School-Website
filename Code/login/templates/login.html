@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href = "../static/style-login.css">
+    <title>Login</title>
 
+</head>
+<body>
+
+    <div class = "container">
+        <img src = "../static/taleem-gah logo.png" class = "img-logo">
+
+        <div class="header">
+            <h1>Login</h1>
+        </div>
+    </div>
+
+
+    <div class ="rectangle">
+
+        {% if message %}
+            <p class = "message"> {{ message | safe }} </p>
+
+        {% endif %}
+        
+        <div class="form">
+            <form action = "/submit" method = "POST">
+                <div class="login">
+                    <input type = "email" placeholder = "Email Address" name = "uname"/>
+
+                    <input type = "text" placeholder = "Password" name = "pass"/>
+                </div>
+
+                <div class="submit-button">
+                    <button type="submit">Login</button>
+                </div>
+                
+                <div class="footer">
+                <a href = "{{url_for('register')}}">Don't have an account yet? Sign Up</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
