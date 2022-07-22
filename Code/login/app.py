@@ -6,7 +6,7 @@ app = Flask(__name__)
 # routing
 @app.route('/')
 def home():
-    return render_template('login.html')
+    return render_template('welcome.html')
     # return 'Hello World!'
 
 @app.route('/login')
@@ -22,6 +22,16 @@ def logout():
 @app.route('/registration')
 def register():
     return render_template('register.html')
+    # return 'Hello World!'
+
+@app.route('/verify-details')
+def verify():
+    return render_template('verify.html')
+    # return 'Hello World!'
+
+@app.route('/reset')
+def reset_pass():
+    return render_template('reset-pass.html')
     # return 'Hello World!'
 
 @app.route('/submit', methods = ['POST'])
