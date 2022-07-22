@@ -1,13 +1,17 @@
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
-from models import *
+from flask_migrate import Migrate
+#from flask_sqlalchemy import SQLAlchemy
+from models import db, StudentModel
+
 
 app = Flask(__name__)
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/taleemgah'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 api= Api(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://faiz:password@localhost/taleem-gah'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app) #links database instance with api app
 
 @app.before_first_request
@@ -49,7 +53,7 @@ class StudentView(Resource):
             return student.json()
         return {'message':'student not found'},404
 
-    def put(self, id):
+    def put(self, name):
         """ convert JSON data sent by user to python format, 
             search if the student exists,
             if exists, update it with given information,
@@ -57,24 +61,24 @@ class StudentView(Resource):
         """
         data = request.get_json()
 
-        student = StudentModel.query.filter_by(id=id).first()
+        student = StudentModel.query.filter_by(name=name).first()
 
         if student:
-            student.price = data["price"]
-            student.author = data["author"]
+            student.name = data["name"]
+            student.age = data["age"]
         else:
-            student = StudentModel(id=id,**data)
+            student = StudentModel(name=name,**data)
  
         db.session.add(student)
         db.session.commit()
  
         return student.json()
 
-    def delete(self, id):
+    def delete(self, name):
         """ Search if the student exists in the database and deletes,
             else, returns error
         """
-        student = StudentModel.query.filter_by(id=id).first()
+        student = StudentModel.query.filter_by(name=name).first()
         if student:
             db.session.delete(student)
             db.session.commit()
@@ -84,7 +88,7 @@ class StudentView(Resource):
         
 
 #adding endpoint for single student operations
-api.add_resource(StudentView, '/student') 
+api.add_resource(StudentView, '/student/<string:name>') 
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000)
