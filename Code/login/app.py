@@ -1,7 +1,34 @@
 from flask import Flask, render_template, url_for, request
+from flask_sqlalchemy import SQLAlchemy
 
 # app instance
 app = Flask(__name__)
+
+ENV = 'dev'
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:12345@localhost/taleem-gah' #change this to your database settings
+
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # disables warnings
+
+# create database object 
+db = SQLAlchemy(app)
+
+# create model
+class user(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(), unique = True, nullable = False)
+    password = db.Column(db.String(), nullable = False)
+
+    # constructor
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
 # routing
 @app.route('/')
@@ -40,6 +67,10 @@ def submit():
         email = request.form['uname']
         password = request.form['pass']
         # print(email, password)
+
+        # check username exists
+        
+
         if email == '' and password == '':
             return render_template('login.html', message = "Please enter required fields")
         elif email == '' and password != '':
@@ -52,4 +83,4 @@ def submit():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
