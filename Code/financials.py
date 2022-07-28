@@ -61,10 +61,12 @@ def write_csv(financial_data, path):
 #unchecked
 def get_balanceSheet(financial_data, date):
 
+    date = date.strftime('%Y-%m')
+
     if date in financial_data:
         return financial_data[date]
     else:
-        return []
+        return -1
 
 
 def add_balance(financial_data, date, donor, amount):
@@ -97,35 +99,20 @@ def get_total(financial_data, date):
     return total   
 
 
-#incomplete
 def update_balance(financial_data, date, donor1, amount1, donor2, amount2):
 
-    # user_date = str(datetime.datetime.today()).split()[0]
-    # user_year = user_date[0:4]
-    # user_month = user_date[5:7]
-    # # user_day = user_date[8:10]
-
-    # input_date = str(date).split()[0]
-    # input_year = input_date[0:4]
-    # input_month = input_date[5:7]
-    # # input_day = input_date[8:10]
-    
-    # if input_month >= user_month-1 and input_month <= user_month+1 and input_year == user_year:
+    date = date.strftime('%Y-%m')
 
     if date in financial_data:
+        count = 0
         for donor in financial_data[date]:
-            if donor[0] == donor1:
-                donor = [donor2, amount2]
+            if donor[0] == donor1 and donor[1] == amount1:
+                financial_data[date][count] = [donor2, amount2]
+            count += 1
     else:
         financial_data[date].append([donor2, amount2])
 
-    financial_data[date].sort(key=lambda x: x[1], reverse=True)
-
     return financial_data[date]
-
-    # else:
-
-    #     return 'Date not in range'
 
 
 '''
@@ -158,7 +145,7 @@ def main(input_func, parameters):
 
         date, donor1, amount1, donor2, amount2 = parameters
         update_balance(financial_data, date, donor1, amount1, donor2, amount2)
-        write_csv(financial_data)
+        write_csv(financial_data, path)
 
 
     return
