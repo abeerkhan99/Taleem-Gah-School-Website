@@ -5,10 +5,9 @@ import datetime
 Structure = 
 
 .csv
-{Date (MMYY): [[Donor 1, Amount], [Donor 2, Amount], [Donor 3, Amount] .. etc]}
+{Entry : Date (MMYY): [[Donor 1, Amount] /n [Donor 2, Amount] /n [Donor 3, Amount] .. etc]}
 Identifier + Date:
 -Balance Sheet
--Total
 
 Identifier + Date: .. etc
 
@@ -21,25 +20,46 @@ Sort by date first, then calculate the balance.
 Functions= 
 get_balanceSheet(date)
 add_balance(date, donor, amount)
+update_balance(date, donor1, amount1, donor2, amount2)
 get_total(date)
 
 """
 
-financial_data = dict()
+# update so it works sequentially and also actually uses csvs, and also auto updates
 
-def read_csv():
-    with open('financials.csv', 'r') as csvfile:
+def read_csv(financial_data, path):
+
+    data = []
+    with open(path, 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            financial_data[row[0]] = row[1:]
+            if row:
+                data.append(row)
+    # print(data)
+    for i in range(len(data)):
+        if data[i][0][0:7] == 'Entry: ':
+            date = data[i][0][7:]
+            financial_data[date] = []
+            for j in range(i+1, len(data)):
+                if data[j][0][0:7] != 'Entry: ':
+                    financial_data[date].append([data[j][0], int(data[j][1])])
+                else:
+                    break
 
-def write_csv(financial_data):
-    with open('financials.csv', 'w') as csvfile:
+    return financial_data
+
+
+def write_csv(financial_data, path):
+
+    with open(path, 'w+') as csvfile:
         writer = csv.writer(csvfile)
         for key, value in financial_data.items():
-            writer.writerow([key, value])
+            writer.writerow(['Entry: ' + key])
+            for i in value:
+                writer.writerow([i[0], i[1]])
 
-def get_balanceSheet(date):
+#unchecked
+def get_balanceSheet(financial_data, date):
 
     if date in financial_data:
         return financial_data[date]
@@ -47,42 +67,103 @@ def get_balanceSheet(date):
         return []
 
 
-def add_balance(date, donor, amount):
+def add_balance(financial_data, date, donor, amount):
 
+    date = date.strftime('%Y-%m')
+  
     if date in financial_data:
         financial_data[date].append([donor, amount])
     else:
         financial_data[date] = [[donor, amount]]
+ 
+    return financial_data[date]
+
+
+def get_total(financial_data, date):
+
+    total = 0
+    for csv_date, balance in financial_data.items():
+        csv_month = int(csv_date[5:])
+        csv_year = int(csv_date[0:4])
+
+        date_month = int(date.strftime('%m'))
+        date_year = int(date.strftime('%Y'))
+
+        # csv date has to be lesser or equal to input date to calculate totals for that month
+        if (csv_month <= date_month and csv_year == date_year) or (csv_month >= date_month and csv_year <= date_year-1):
+            for amount in balance:
+                total += amount[1]
+
+    return total   
+
+
+#incomplete
+def update_balance(financial_data, date, donor1, amount1, donor2, amount2):
+
+    # user_date = str(datetime.datetime.today()).split()[0]
+    # user_year = user_date[0:4]
+    # user_month = user_date[5:7]
+    # # user_day = user_date[8:10]
+
+    # input_date = str(date).split()[0]
+    # input_year = input_date[0:4]
+    # input_month = input_date[5:7]
+    # # input_day = input_date[8:10]
+    
+    # if input_month >= user_month-1 and input_month <= user_month+1 and input_year == user_year:
+
+    if date in financial_data:
+        for donor in financial_data[date]:
+            if donor[0] == donor1:
+                donor = [donor2, amount2]
+    else:
+        financial_data[date].append([donor2, amount2])
 
     financial_data[date].sort(key=lambda x: x[1], reverse=True)
 
     return financial_data[date]
 
+    # else:
 
-def get_total(date):
-    total = 0
-    for donor in get_balanceSheet(date):
-        total += donor[1]
-    return total   
+    #     return 'Date not in range'
 
 
-def main():
+'''
+input will be either - 'add', 'get', 'total', 'update'
+parameters will be a list of correct size. E.g for add itll be [datetime, donor, amount]
+'''
+def main(input_func, parameters):
 
-    get_balanceSheet(datetime.datetime(2020, 5, 17))
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 1", 100)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 2", 200)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 3", 300)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 4", 400)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 5", 500)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 6", 600)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 7", 700)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 8", 800)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 9", 900)
-    add_balance(datetime.datetime(2020, 5, 17), "Donor 10", 1000)
+    path = 'financials.csv'
+    financial_data = read_csv(financial_data=dict(), path=path)
+    # financial_data = dict()
 
-    print(get_total(datetime.datetime(2020, 5, 17)))
+    if input_func == 'add':
+
+        date, donor, amount = parameters
+        add_balance(financial_data, date, donor, amount)
+        write_csv(financial_data, path)
+
+    elif input_func == 'get':
+
+        date = parameters[0]
+        return get_balanceSheet(financial_data, date)
+    
+    elif input_func == 'total':
+
+        date = parameters[0]
+        return get_total(financial_data, date)
+    
+    elif input_func == 'update':
+
+        date, donor1, amount1, donor2, amount2 = parameters
+        update_balance(financial_data, date, donor1, amount1, donor2, amount2)
+        write_csv(financial_data)
+
+
+    return
 
 
 if __name__ == "__main__":
 
-    main()
+    import call_financials
