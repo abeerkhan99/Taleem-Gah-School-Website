@@ -90,7 +90,7 @@ def get_total(financial_data, date):
         date_year = int(date.strftime('%Y'))
 
         # csv date has to be lesser or equal to input date to calculate totals for that month
-        if (csv_month <= date_month and csv_year == date_year) or (csv_month >= date_month and csv_year <= date_year-1):
+        if (csv_month <= date_month and csv_year <= date_year) or (csv_month >= date_month and csv_year <= date_year-1):
             for amount in balance:
                 total += amount[1]
 

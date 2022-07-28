@@ -8,4 +8,4 @@ financials.main('add', [datetime.datetime.today(), 'Donor 2', 100])
 financials.main('add', [datetime.datetime(2001, 1, 12), 'Donor 3', 200])
 financials.main('add', [datetime.datetime(2001, 1, 12), 'Donor 5', 300])
 
-print(financials.main('total', [datetime.datetime(2001, 1, 12)]))
+print(financials.main('total', [datetime.datetime.today()]))
