@@ -10,7 +10,7 @@
     <h1>Homepage </h1>
     <a href = "{{url_for('login')}}">Log Out</a>
 
-    {% if session['email'] %}
+    {% if session['user_info'] %}
         <h1>Welcome {{ session['user_info'] }}!</h1>
     {% endif %}
 
