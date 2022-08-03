@@ -5,26 +5,28 @@ class my_pdf:
 
     pdf = FPDF('P', 'mm', [220, 210])
 
-    def generate(self, subjects=None, marksObtained=None, passingMarks=None, totalMarks=None, path1=None, path2=None, path3=None):
+    def __init__(self, subjects=None, marksObtained=None, passingMarks=None, totalMarks=None, name=None, path1=None, path2=None, path3=None):
 
-        subjects = ['Urdu', 'English', 'Math', 'Social Studies', 'Science', 'Islamiat', 'Sindhi', 'Art Drawing', 'Total Marks']
+        # subjects = ['Urdu', 'English', 'Math', 'Social Studies', 'Science', 'Islamiat', 'Sindhi', 'Art Drawing', 'Total Marks']
+        # marksObtained = [11, 89, 9, 12, 92, 93, 5, 75]
+        # passingMarks = [33, 34, 35, 36, 37, 38, 39, 40]
+        # totalMarks = [100, 100, 100, 100, 100, 100, 75, 75]
+    
+        self.name = name
+
         page1Columns = ['Subject', 'Total Marks', 'Marks Obtained', 'Passing Grade']
-        marksObtained = [11, 89, 9, 12, 92, 93, 5, 75]
-        passingMarks = [33, 34, 35, 36, 37, 38, 39, 40]
-        totalMarks = [100, 100, 100, 100, 100, 100, 75, 75]
-
         passingMarks.append(str(round(mean(marksObtained), 1))+"%")
         marksObtained.append(sum(marksObtained))
         totalMarks.append(sum(totalMarks))
 
-        self.init()
+        self.initialize_pdf()
         self.grades(columnNamesArr=page1Columns, subjects=subjects, marksArr=marksObtained, passingArr=passingMarks, totalArr=totalMarks)
         self.details()
         self.sig(path1, path2, path3)
         
         self.pdf.output('PDF Reports/test_report.pdf', 'F')
 
-    def init(self):
+    def initialize_pdf(self):
         self.pdf.add_page('L')
         # Add page title
         self.pdf.set_fill_color(255,255,255)
@@ -117,7 +119,7 @@ class my_pdf:
         dist = self.pdf.get_string_width('Name: ')
         self.pdf.cell(dist, height, 'Name: ', 0, 0, 'L')
         x = self.pdf.get_x()
-        self.pdf.cell(width, height, 'Faiz Haseeb', 0, 0, 'L')
+        self.pdf.cell(width, height, self.name, 0, 0, 'L')
         self.pdf.line(x, self.pdf.get_y()+height, right-10, self.pdf.get_y()+height)
     
 
@@ -198,8 +200,7 @@ class my_pdf:
 
 def main():
 
-    pdf = my_pdf()
-    pdf.generate(path1="C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg",
+    my_pdf(subjects=None, marksObtained=None, passingMarks=None, totalMarks=None, path1="C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg",
     path2="C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg",
     path3="C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg")
 

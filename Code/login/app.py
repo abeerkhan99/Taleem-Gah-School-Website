@@ -27,10 +27,10 @@ app.secret_key = 'BAD_SECRET_KEY'
 
 def get_db_connection():
     conn = psycopg2.connect(
-            host="localhost",
-            database="taleem-gah",
-            user= 'postgres',
-            password= '12345')
+            host="127.0. 0.1",
+            dbname="taleem-gah",
+            user= "postgres",
+            password= 'akeelmedina')
 
     return conn
 
@@ -89,7 +89,7 @@ def submit():
             cur.execute('SELECT Username from faculty where Username = %s', (user_name,))
             user_object = cur.fetchall() 
 
-            print(user_object[0][0])
+            # print(user_object[0][0])
 
             if user_object == user_name:
                 return render_template('login.html', message = "This username does not exist")
