@@ -1,16 +1,46 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html>
 <head>
-    <link rel = "stylesheet" href = "../static/style-login.css">
-    <title>Sign up</title>
-
+    <title>Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <img src = "../static/taleem-gah logo.png" class = "logo"></img>
-    <h1>Registration page </h1>
 
+    <div class="nav-bar">
+      <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+            <div class="container">
+                
+                {% if message %}
+                    <p class = "message"> {{ message | safe }} </p>
+                {% endif %}
+
+
+                <form action = "/registration-submit" method = "POST">
+                    <div class="info">
+
+                        <input type="text" placeholder="First Name" name="f_name" required>
+                        <input type="text" placeholder="Last Name" name="l_name" required>
+                        <input type="text" placeholder="CNIC" name="cnic" required>
+                        <input type="text" placeholder="Address" name="home_address" required>
+                        <input type="text" placeholder="Username" name="u_name" required >
+                        <input type="text" placeholder="Email Address" name="email_a" required >
+                        <input type="password" placeholder="Password" name="pass" required >
+                        <input type="text" placeholder="Phone Number" name="phone_no" required >
+
+                        <input type="radio" name="f_type" id = "type1" value="Teacher" required> Teacher
+                        <input type="radio" name="f_type" id = "type2" value="Admin"> Admin
+
+                        <input type="submit" value="Register">
+                    </div>
+                </form>
+            </div>  
+        </div> 
+    </div>
 </body>
-
-
-
 </html>
