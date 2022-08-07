@@ -280,14 +280,28 @@ def view_records_homepage():
     # return 'Hello World!'
 
 @app.route('/faculty-records')
-def faculty_records():
-    return render_template('view_faculty_records.html')
-    # return 'Hello World!'
+def display_faculty_records():
+    #extract all faculty info from database
+    #store in list
+    if len(session.get('user_info_name')) != 0 and len(session.get('user_info_email')) != 0 and session.get('user_info_type') == 'Admin':
+        
+        cur.execute('SELECT facultyID, FirstName, LastName, CNIC, Address, Username, Email, PhoneNo, faculty_type from faculty')
+        faculty_records_object = cur.fetchall()
+        print('FACULTY RECORDS ARE:', faculty_records_object)
+        
+        return render_template('view_faculty_records.html', len = len(faculty_records_object), faculty_records_object = faculty_records_object)
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
 
 @app.route('/student-records')
-def student_records():
-    return render_template('view_student_records.html')
-    # return 'Hello World!'
+def display_student_records():
+    #extract all faculty info from database
+    #store in list
+
+    item_list = ['item1', 'item2', 'item3'] # Up to 1000 items
+    
+    return render_template('view_student_records.html', item_list=item_list)
 
 
 if __name__ == '__main__':
