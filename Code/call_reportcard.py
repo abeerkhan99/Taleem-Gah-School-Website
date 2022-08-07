@@ -25,7 +25,7 @@ def create_pandas_table(sql_query, database = conn):
     return table
   
 # Utilize the create_pandas_table function to create a Pandas data frame
-# Store the data as a variable
+# TAKE USERNAME FROM FRONTEND
 username = 'abeer_khan'
 info = create_pandas_table("SELECT * FROM faculty WHERE username = '{}'".format(username))
 
@@ -42,4 +42,5 @@ totalMarks = [100, 100, 100, 100, 100, 100, 75, 75]
 
 name = info[1] + " " + info[2]
 path = "C://Users//akeel//Desktop//Taleem Gah//Taleem-Gah-School-Website//Code//sig.jpeg"
-pdf = my_pdf(subjects=subjects, marksObtained=marksObtained, passingMarks=passingMarks, totalMarks=totalMarks, name=name, path1=path, path2=path, path3=path)
+output_path = 'PDF Reports/test_report.pdf'
+pdf = my_pdf(subjects=subjects, marksObtained=marksObtained, passingMarks=passingMarks, totalMarks=totalMarks, name=name, path1=path, path2=path, path3=path, output_path=output_path)

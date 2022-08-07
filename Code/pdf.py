@@ -5,7 +5,7 @@ class my_pdf:
 
     pdf = FPDF('P', 'mm', [220, 210])
 
-    def __init__(self, subjects=None, marksObtained=None, passingMarks=None, totalMarks=None, name=None, path1=None, path2=None, path3=None):
+    def __init__(self, subjects=None, marksObtained=None, passingMarks=None, totalMarks=None, name=None, path1=None, path2=None, path3=None, output_path=None):
 
         # subjects = ['Urdu', 'English', 'Math', 'Social Studies', 'Science', 'Islamiat', 'Sindhi', 'Art Drawing', 'Total Marks']
         # marksObtained = [11, 89, 9, 12, 92, 93, 5, 75]
@@ -24,7 +24,7 @@ class my_pdf:
         self.details()
         self.sig(path1, path2, path3)
         
-        self.pdf.output('PDF Reports/test_report.pdf', 'F')
+        self.pdf.output(output_path, 'F')
 
     def initialize_pdf(self):
         self.pdf.add_page('L')
