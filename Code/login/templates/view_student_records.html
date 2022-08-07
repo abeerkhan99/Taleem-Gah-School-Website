@@ -24,7 +24,14 @@
                     <a class="register-btn" href = "{{url_for('register')}}">Register</a>
                     <a class="login-btn" href = "{{url_for('login')}}">Log in</a>
            
-                </div>  
+                </div> 
+                
+                {% for item in itemList%}
+                <li class="list-group-item">
+                    <div class="item_number">{{ loop.index }}</div>
+                    <div class="item_name">{{ item }}</div>
+                </li>
+                {% endfor %}
              </div>
         </div>  
 

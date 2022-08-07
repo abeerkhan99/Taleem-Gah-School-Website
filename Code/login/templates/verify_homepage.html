@@ -20,10 +20,11 @@
         {% endif %}
     
             <div class="form">
-                <form action = "/reset_pass_submit" method = "POST">
+                <form action = "/verification" method = "POST">
                     
-                    <input type="text" name="new_pass" placeholder = "New Password">
-                    <input type="submit" value="Reset Password">
+                    <input type="text" name="u_email" placeholder = "Email Address">
+                        <input type="text" name="u_cnic" placeholder = "CNIC">
+                        <input type="submit" value="Verify">
 
                 </form>
             </div>
