@@ -1,7 +1,7 @@
 from pickletools import read_uint1
 from flask import Flask, render_template, url_for, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import LABEL_STYLE_TABLENAME_PLUS_COL, create_engine
+from sqlalchemy import LABEL_STYLE_TABLENAME_PLUS_COL, create_engine, delete
 from sqlalchemy.orm import Session
 import os
 import psycopg2
@@ -287,11 +287,86 @@ def display_faculty_records():
         
         cur.execute('SELECT facultyID, FirstName, LastName, CNIC, Address, Username, Email, PhoneNo, faculty_type from faculty')
         faculty_records_object = cur.fetchall()
-        print('FACULTY RECORDS ARE:', faculty_records_object)
+        # print('FACULTY RECORDS ARE:', faculty_records_object)
         
         return render_template('view_faculty_records.html', len = len(faculty_records_object), faculty_records_object = faculty_records_object)
     else:
         return redirect(url_for('login', message = "Please login."))
+
+@app.route('/edit_record', methods = ['GET', 'POST'])
+def edit_records():
+    if len(session.get('user_info_name')) != 0 and len(session.get('user_info_email')) != 0 and session.get('user_info_type') == 'Admin':
+        if request.method == 'POST':
+            
+            cur.execute('SELECT facultyID, FirstName, LastName, CNIC, Address, Username, Email, PhoneNo, faculty_type from faculty')
+            faculty_records_object = cur.fetchall()
+            # print('FACULTY RECORDS ARE:', faculty_records_object)
+
+        
+            edit_item = []
+            for x in range(len(faculty_records_object[0])):
+                edit_item.append(request.form[str(x)])
+            print(edit_item)
+
+            session['edit_record'] = edit_item
+            
+
+            return render_template('edit_record_submit.html', edit_item = edit_item)
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
+@app.route('/edit_record_submit', methods = ['GET', 'POST'])
+def edit_records_submit():
+    if len(session.get('user_info_name')) != 0 and len(session.get('user_info_email')) != 0 and session.get('user_info_type') == 'Admin':
+        if request.method == 'POST':
+
+            new_edit_item = []
+            for x in range(1, len(session.get('edit_record'))):
+                new_edit_item.append(request.form[str(x)])
+            print(new_edit_item)
+
+            # update 
+
+            # cur.execute("UPDATE faculty SET Pass = %s WHERE CNIC = %s AND Email = %s", (user_new_pass, session.get('reset_u_cnic'), session.get('reset_u_email'),))
+
+
+
+            return render_template('edit_record_submit.html', edit_item = new_edit_item)
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
+    
+
+@app.route('/delete_records', methods = ['GET', 'POST'])
+def delete_records():
+    if len(session.get('user_info_name')) != 0 and len(session.get('user_info_email')) != 0 and session.get('user_info_type') == 'Admin':
+        if request.method == 'POST':
+            
+            cur.execute('SELECT facultyID, FirstName, LastName, CNIC, Address, Username, Email, PhoneNo, faculty_type from faculty')
+            faculty_records_object = cur.fetchall()
+            # print('FACULTY RECORDS ARE:', faculty_records_object)
+
+            delete_item = []
+            for x in range(len(faculty_records_object[0])):
+                delete_item.append(request.form[str(x)])
+            print(delete_item)
+
+            cur.execute('DELETE from faculty WHERE facultyID = %s AND FirstName = %s AND LastName = %s AND CNIC = %s AND Address = %s AND Username = %s AND Email = %s AND PhoneNo = %s AND faculty_type = %s'
+                        (delete_item[0], delete_item[1], delete_item[2], delete_item[3], delete_item[4], delete_item[5], delete_item[6], delete_item[7], delete_item[8],))
+            
+            # reset sequence
+            cur.execute('ALTER SEQUENCE faculty_facultyID_seq RESTART WITH 1')
+
+            conn.commit()
+
+            cur.execute('SELECT facultyID, FirstName, LastName, CNIC, Address, Username, Email, PhoneNo, faculty_type from faculty')
+            faculty_records_object = cur.fetchall()
+
+            return render_template('view_faculty_records.html', len = len(faculty_records_object), faculty_records_object = faculty_records_object, message = "Deletion Successful")
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
+
 
 
 @app.route('/student-records')
