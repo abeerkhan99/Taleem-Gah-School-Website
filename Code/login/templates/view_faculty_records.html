@@ -39,7 +39,7 @@
             {% endfor %}
             <td>
                 <div class="button">
-                    <form action="{{ url_for('delete_records') }}" method = "POST">
+                    <form action="{{ url_for('delete_faculty_records') }}" method = "POST">
                         <input type="hidden"  name = '0'  value="{{faculty_records_object[x][0]}}">
                         <input type="hidden"  name = '1'  value="{{faculty_records_object[x][1]}}">
                         <input type="hidden"  name = '2'  value="{{faculty_records_object[x][2]}}">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="button">
-                    <form action="{{ url_for('edit_records') }}" method = "POST">
+                    <form action="{{ url_for('edit_faculty_records') }}" method = "POST">
                         <input type="hidden"  name = '0'  value="{{faculty_records_object[x][0]}}">
                         <input type="hidden"  name = '1'  value="{{faculty_records_object[x][1]}}">
                         <input type="hidden"  name = '2'  value="{{faculty_records_object[x][2]}}">
