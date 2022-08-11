@@ -1,0 +1,91 @@
+
+
+.nav-bar
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 100px;
+  background-color: #E5E5E5;
+}
+
+.logo
+{
+  margin: 15px;
+}
+
+
+.nav-bar a { 
+}
+
+.show {  
+    position: absolute;
+    margin-top: 25px;
+    right: 15px;
+      background-color: #597906;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 45px;
+  font-family: 'Roboto Mono';
+  }
+
+
+body{
+    background-color: #E5E5E5;
+    font-family: 'Roboto Mono';
+
+}
+.body{
+    width: 200px;
+    margin: auto;
+    margin-top: 150px;
+    text-align: center;
+}
+
+.info{
+    background-color: white;
+    border-radius: 8px;
+}
+
+.info input{
+    font-family: 'Open Sans', sans-serif;
+    border:none;
+    outline: none;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.login input{
+    background-color:#597906 ;
+    width:100%;
+    border: none;
+    outline: none;
+    border-radius: 45px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    margin-top: 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+}
+
+#loginform p{
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+
+}
+
+#loginform a{
+    color: white;
+    text-decoration: none;
+    padding-top: 100px;
+    font-size: 13px;
+}

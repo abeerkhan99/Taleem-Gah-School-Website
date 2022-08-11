@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="nav-bar">
+      <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+            <div class="container">
+                
+                {% if message %}
+                    <p class = "message"> {{ message | safe }} </p>
+                {% endif %}
+
+
+                <form action = "/edit_record_submit" method = "POST">
+                    <div class="info">
+
+                        <input type="text" placeholder="First Name" name="1" value="{{edit_item[1]}}" required>
+                        <input type="text" placeholder="Last Name" name="2" value="{{edit_item[2]}}" required>
+                        <input type="text" placeholder="CNIC" name="3" value="{{edit_item[3]}}" required>
+                        <input type="text" placeholder="Address" name="4"  value="{{edit_item[4]}}" required>
+                        <input type="text" placeholder="Username" name="5" value="{{edit_item[5]}}" required >
+                        <input type="text" placeholder="Email Address" name="6" value="{{edit_item[6]}}" required >
+                        <input type="text" placeholder="Phone Number" name="7" value="{{edit_item[7]}}" required >
+                        
+                        {% if 'Admin' in edit_item[8] %}
+                            <input type="radio" name="8" id = "type1" value="Teacher" checked = "checked" required> Teacher
+                            <input type="radio" name="8" id = "type2" value="Admin"> Admin
+                        {% else %}
+                            <input type="radio" name="8" id = "type1" value="Teacher" required> Teacher
+                            <input type="radio" name="8" id = "type2" value="Admin" checked = "checked" > Admin
+                        {% endif %}
+
+
+                        <input type="submit" value="Update Record">
+                    </div>
+                </form>
+            </div>  
+        </div> 
+    </div>
+</body>
+</html>
