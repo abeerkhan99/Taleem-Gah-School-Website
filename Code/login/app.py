@@ -27,11 +27,11 @@ app.secret_key = 'BAD_SECRET_KEY'
 
 def get_db_connection():
     conn = psycopg2.connect(
-            host="127.0. 0.1",
-            dbname="taleem-gah",
+            host="localhost",
+            database="taleem-gah",
             user= "postgres",
-            password= 'akeelmedina')
-
+            password= "akeelmedina",
+            port = "5432")
     return conn
 
 # Open a cursor to perform database operations
