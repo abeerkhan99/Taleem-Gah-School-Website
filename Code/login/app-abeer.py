@@ -53,7 +53,17 @@ def submit():
         else:
             # fields entered
             # check username exists
-            cur.execute('SELECT Username from faculty where Username = %s', (user_name,))
+            try:
+                cur.execute('SELECT Username from faculty where Username = %s', (user_name,))
+            except psycopg2.InterfaceError as exc:
+                print(exc.message)
+                conn = psycopg2.connect(
+                    host="ec2-99-81-137-11.eu-west-1.compute.amazonaws.com",
+                    database="daa4fhosr8e8gk",
+                    user= 'wwaakwjbwwkzsz',
+                    password= '8f8d7d62bfbd038bc9501b2bd87f7a7bd73625737c94e86c106dfeb8040e3397',
+                    port = 5432)
+                cursor = conn.cursor()
             user_object = cur.fetchall() 
             user_object_string = None
 
