@@ -1,0 +1,688 @@
+create table faculty
+(
+    facultyID serial unique primary key not null,
+    FirstName character varying not null,
+    LastName character varying,
+    Username character varying unique not null,
+    Pass character varying not null,
+    PhoneNo character varying not null,
+    faculty_type character varying not null
+
+);
+
+--drop table faculty;
+
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values 
+('Abeer', 'Khan', 'abeer_khan', '12345', '03059699754', 'Admin');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values 
+('Akeel', 'Medina', 'akeel_medina',  '6789', '03259594784', 'Admin');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values 
+('Ali', 'Adnan', 'ali_adnan', 'password', '03249697755', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Faiz', 'Haseeb', 'faiz_haseeb', 'pass', '03455689721', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Bisma', 'Shehnaz', 'bisma_shehnaz', '12345', '03447381876', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Faiza', 'Parveen', 'faiza_parveen', '12345', '03172097211', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Sunita', 'Nandlal', 'sunita_nandlal', '12345', '03323700605', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Urooj', 'Fatima', 'urooj_fatima', '12345', '03091023750', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Saira', 'Ali', 'saira_ali', '12345', '03232536177', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Nadia', 'Irfan', 'nadia_irfan', '12345', '03002805497', 'Teacher');
+
+insert into faculty (FirstName, Username, Pass, PhoneNo, faculty_type) values  
+('Rubab', 'rubab', '12345', '03442970153', 'Teacher');
+
+insert into faculty (FirstName, Username, Pass, PhoneNo, faculty_type) values  
+('Naseema', 'naseema', '12345', '03452491152', 'Teacher');
+
+insert into faculty (FirstName, LastName, Username, Pass, PhoneNo, faculty_type) values  
+('Ayesha', 'Asghar', 'ayesha_asghar', '12345', '03408358659', 'Teacher');
+
+insert into faculty (FirstName, Username, Pass, PhoneNo, faculty_type) values  
+('Nasreen', 'nasreen', '12345', '03452491152', 'Teacher');
+
+insert into faculty (FirstName, Username, Pass, PhoneNo, faculty_type) values  
+('Humera', 'humera', '12345', '03130029762', 'Teacher');
+
+insert into faculty (FirstName, Username, Pass, PhoneNo, faculty_type) values  
+('Dayanand', 'dayanand', '12345', '03480352841', 'Teacher');
+
+
+create table student
+(
+    studentID serial unique primary key not null,
+    FirstName character varying not null,
+    LastName character varying not null,
+    Gender character varying not null,
+    repetition character varying not null
+
+);
+
+insert into student(firstname, lastname, gender, repetition) values ('Mohammed', 'Akif','Male', 1);
+
+insert into student(firstname, lastname, gender, repetition) values ('Abdullah','Shahid','Male', 1);
+
+insert into student(firstname, lastname, gender, repetition) values ('Mohammad','Daniyal','Male', 1);
+
+insert into student(firstname, lastname, gender, repetition) values ('Khadija','','Female', 1);
+
+
+create table classes
+(
+    classesID serial unique primary key not null,
+    class_name character varying unique not null
+);
+
+insert into classes(class_name) values
+('Nursery Junior');
+
+insert into classes(class_name) values
+('Nursery Senior');
+
+insert into classes(class_name) values
+('KG1');
+
+insert into classes(class_name) values
+('KG2');
+
+insert into classes(class_name) values
+('Class 1');
+
+insert into classes(class_name) values
+('Class 2');
+
+insert into classes(class_name) values
+('Class 3');
+
+insert into classes(class_name) values
+('Class 4');
+
+insert into classes(class_name) values
+('Class 5');
+
+insert into classes(class_name) values
+('Class 6');
+
+insert into classes(class_name) values
+('Class 7');
+
+create table semester
+(
+    semesterID serial unique primary key not null,
+    semesterName character varying unique not null
+
+);
+
+insert into semester(semesterName) values
+('1');
+
+insert into semester(semesterName) values
+('2');
+
+insert into semester(semesterName) values
+('3');
+
+
+create table class_has_semester
+(
+    class_Semester character varying references semester(semesterName),
+    class_classesName character varying references classes(class_name),
+    CONSTRAINT class_has_semester_pkey PRIMARY KEY (class_Semester, class_classesName)  
+
+);
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_semester(class_Semester, class_classesName) values 
+('2', (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('1', (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('2', (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_semester(class_Semester, class_classesName) values
+('3', (select class_name from classes where class_name = 'Class 7'));
+
+create table subject
+(
+    subjectID serial unique primary key not null,
+    SubjectName character varying unique not null
+);
+
+insert into subject (SubjectName) values
+('Sindhi');
+
+insert into subject(SubjectName) values
+('English');
+
+insert into subject(SubjectName) values
+('Urdu');
+
+insert into subject(SubjectName) values
+('Mathematics');
+
+insert into subject(SubjectName) values
+('Islamiat Oral');
+
+insert into subject (SubjectName) values
+('General Knowledge');
+
+insert into subject (SubjectName) values
+('Art');
+
+insert into subject (SubjectName) values
+('Science');
+
+insert into subject (SubjectName) values
+('Social Studies');
+
+insert into subject (SubjectName) values
+('Islamiat');
+
+create table marks
+(
+
+    marksID serial unique primary key not null,
+    student_ID integer references student(studentID),
+    class_Name character varying references classes(class_name),
+    semester_Name character varying references semester(semesterName),
+    subject_Name character varying references subject(SubjectName),
+    Total_Marks character varying not null,
+    Passing_Marks character varying not null,
+    Marks character varying not null
+    
+);
+
+select distinct semester_Name from marks where student_ID = (select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif');
+
+insert into marks(student_ID, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) values
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Nursery Junior', '1', 'English', '100', '50', '80');
+
+
+insert into marks(student_ID, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) values
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Nursery Junior', '1', 'Urdu', '100', '50', '70');
+
+
+insert into marks(student_ID, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) values
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Nursery Junior', '1', 'Mathematics', '100', '50', '60');
+
+
+insert into marks(student_ID, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) values
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Nursery Senior', '1', 'Mathematics', '100', '50', '60');
+
+insert into marks(student_ID, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) values
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Class 7', '2', 'Mathematics', '100', '50', '60');
+
+
+create table class_has_student
+(
+    class_studentID integer references student(studentID),
+    class_classesName character varying references classes(class_name),
+    CONSTRAINT class_has_student_pkey PRIMARY KEY (class_studentID, class_classesName)  
+
+);
+
+insert into class_has_student(class_studentID, class_classesName) values 
+((select studentID from student where FirstName = 'Mohammed' and LastName = 'Akif'), 'Nursery Junior');
+
+
+insert into class_has_student(class_studentID, class_classesName) values 
+((select studentID from student where FirstName = 'Abdullah' and LastName = 'Shahid'), 'Nursery Junior');
+
+
+insert into class_has_student(class_studentID, class_classesName) values 
+((select studentID from student where FirstName = 'Mohammad' and LastName = 'Daniyal'), 'Class 7');
+
+
+
+create table teacher_has_subject
+(
+    teacher_facultyID integer references faculty(facultyID),
+    teacher_subjectName character varying references subject(SubjectName),
+    CONSTRAINT teacher_has_subject_pkey PRIMARY KEY (teacher_facultyID, teacher_subjectName)  
+
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'English'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'Urdu'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'Mathematics'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'Islamiat Oral'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'General Knowledge'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'Art'
+);
+
+
+
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'English'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'Urdu'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'Mathematics'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'Islamiat Oral'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'General Knowledge'
+);
+
+insert into teacher_has_subject (teacher_facultyID, teacher_subjectName) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'Art'
+);
+
+
+
+
+create table teacher_has_class
+(
+    teacher_facultyID integer references faculty(facultyID),
+    teacher_className character varying references classes(class_name),
+    CONSTRAINT teacher_has_class_pkey PRIMARY KEY (teacher_facultyID, teacher_className)  
+
+);
+
+
+
+
+insert into teacher_has_class (teacher_facultyID, teacher_className) values
+(
+    (select facultyID from faculty where FirstName = 'Faiza'), 'Nursery Junior'
+);
+
+insert into teacher_has_class (teacher_facultyID, teacher_className) values
+(
+    (select facultyID from faculty where FirstName = 'Bisma'), 'Nursery Senior'
+);
+
+
+create table class_has_subject
+(
+    class_subjectName character varying references subject(SubjectName),
+    class_classesName character varying references classes(class_name),
+    CONSTRAINT class_has_subject_pkey PRIMARY KEY (class_subjectName, class_classesName)  
+
+);
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat Oral'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'General Knowledge'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Art'), (select class_name from classes where class_name = 'Nursery Junior'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat Oral'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'General Knowledge'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Art'), (select class_name from classes where class_name = 'Nursery Senior'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat Oral'), (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'General Knowledge'), (select class_name from classes where class_name = 'KG1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Art'), (select class_name from classes where class_name = 'KG1'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat Oral'), (select class_name from classes where class_name = 'KG2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'General Knowledge'), (select class_name from classes where class_name = 'KG2'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 1'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 1'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 2'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 2'));
+
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 3'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Sindhi'), (select class_name from classes where class_name = 'Class 3'));
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 4'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Sindhi'), (select class_name from classes where class_name = 'Class 4'));
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 5'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Sindhi'), (select class_name from classes where class_name = 'Class 5'));
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 6'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Sindhi'), (select class_name from classes where class_name = 'Class 6'));
+
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'English'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Urdu'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Mathematics'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Science'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Social Studies'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Islamiat'), (select class_name from classes where class_name = 'Class 7'));
+
+insert into class_has_subject (class_subjectName, class_classesName) values
+((select SubjectName from subject where SubjectName = 'Sindhi'), (select class_name from classes where class_name = 'Class 7'));
+
+create table student_has_attendance
+(
+    student_studentID integer references student(studentID),
+    class_classesName character varying references classes(class_name),
+    semester_semesterName character varying references semester(semesterName),
+    totalWorkingDays character varying not null,
+    student_attendance character varying not null,
+    CONSTRAINT student_has_attendance_pkey PRIMARY KEY (student_studentID, class_classesName, semester_semesterName)  
+
+);
+
+insert into student_has_attendance(student_studentID, class_classesName, semester_semesterName, totalWorkingDays, student_attendance) values 
+(1, 'Nursery Junior', '1', '250', '200');
+
+insert into student_has_attendance(student_studentID, class_classesName, semester_semesterName, totalWorkingDays, student_attendance) values 
+(1, 'Nursery Senior', '1', '250', '200');
+
+insert into student_has_attendance(student_studentID, class_classesName, semester_semesterName, totalWorkingDays, student_attendance) values 
+(1, 'Class 7', '2', '250', '200');
+
