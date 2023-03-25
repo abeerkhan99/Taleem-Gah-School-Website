@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href = "../static/style-login.css">
+    <title>View Financials</title>
+
+</head>
+<body>
+    <div class="main">
+        <div class = "container">
+            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
+            <a href = "{{url_for('home')}}">go back</a>
+
+        </div>
+
+
+        <div class ="rectangle">
+        {% if message %}
+                <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
+    
+            <div class="form">
+                <form action = "/financial_date_submit" method = "POST">
+                    <label>From</label>
+                    <input type="text"  name = 's_month'  value="{{start_month}}" readonly>
+                    <input type="text"  name = 's_year' value = "{{start_year}}" readonly>
+
+                    <label>To</label>
+                    <input type="text" name = "e_month" value="{{end_month}}" readonly>
+                    <input type="text" name = "e_year" value = "{{end_year}}" readonly>
+
+                    <label>Inflow</label>
+                    {% for x in range(len_balance) %}
+                        {% if balance[x][2][1] > 0 %}
+                            <input type="text" name = "month" value ="{{balance[x][0]}}" readonly>
+                            <input type="text" name = "year" value = "{{balance[x][1]}}" readonly>
+
+                            <input type="text" name = "name" value = "{{balance[x][2][0]}}" readonly>
+                            <input type="text" name = "amount" value = "{{balance[x][2][1]}}" readonly>
+                        {% endif %}
+                    {% endfor %}
+
+                    <label>Outflow</label>
+                    {% for x in range(len_balance) %}
+                        {% if balance[x][2][1] < 0 %}
+                                        
+                            <input type="text" name = "month" value ="{{balance[x][0]}}" readonly>
+                            <input type="text" name = "year" value = "{{balance[x][1]}}" readonly>
+
+                            <input type="text" name = "name" value = "{{balance[x][2][0]}}" readonly>
+                            <input type="text" name = "amount" value = "{{balance[x][2][1]|abs}}" readonly>
+                    
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <label>Total</label>
+                    <input type="text" name ="total" value="{{balance[-1]}}" readonly>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

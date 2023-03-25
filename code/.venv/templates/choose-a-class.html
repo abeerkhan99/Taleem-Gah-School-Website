@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="nav-bar">
+      <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+            <div class="container">
+                
+                {% if message %}
+                    <p class = "message"> {{ message | safe }} </p>
+                {% endif %}
+                
+                <form action = "/choose-a-semester" method = "POST">
+                    <input list="class_name" placeholder = "Choose Class" name = "c_name" required>
+                        <datalist id="class_name">
+                        {% for x in classes %}
+                            <option value="{{x[0]}}">
+                        {% endfor %}
+                        </datalist>
+
+                    <input type="submit" value="Next">
+                </form>
+
+           </div>  
+        </div> 
+    </div>
+</body>
+</html>

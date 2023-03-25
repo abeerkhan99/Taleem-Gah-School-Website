@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>View Financials</title>
+
+</head>
+<body>
+    <div class="main">
+        <div class = "container">
+            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
+            <a href = "{{url_for('home')}}">go back</a>
+
+        </div>
+
+
+        <div class ="rectangle">
+        {% if message %}
+                <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
+    
+            <div class="form">
+                <form action = "/edit-financials-submit" method = "POST">
+                    <label>Month</label>
+                    <input type="text"  name = 'e_month'  value="{{start_month}}" readonly>
+                    <label>Year<label>
+                    <input type="text"  name = 'e_year' value = "{{start_year}}" readonly>
+
+                    <label>Inflow</label>
+                    {% for x in range(len_balance) %}
+                        {% if balance[x][2][1] > 0 %}
+                            <input type="text" id = "{{x}}" name = "d{{x}}" value = "{{balance[x][2][0]}}">
+                            <input type="text" id = "{{x}}" name = "da{{x}}" value = "{{balance[x][2][1]}}">
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <a class="donation-btn" href = "javascript:textboxCreate_donor()">Add Donation</a>
+                    <a class="donation-btn" href = "javascript:textboxDelete_donor()">Delete Donation</a>
+
+                    <div id="donor-box"></div>
+
+                    <label>Outflow</label>
+                    {% for x in range(len_balance) %}
+                        {% if balance[x][2][1] < 0 %}
+                            <input type="text" id = "{{x}}" name = "e{{x}}" value = "{{balance[x][2][0]}}">
+                            <input type="text" id = "{{x}}" name = "ea{{x}}" value = "{{balance[x][2][1]|abs}}">
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <a class = "donation-btn" href = "javascript:textboxCreate_expense()">Add Expense</a>
+                    <a class = "donation-btn" href = "javascript:textboxDelete_expense()">Delete Expense</a>
+
+                    <div id="expense-box"></div>
+
+                    <input type="submit" value="Update Financials">
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var d_name = 1;
+        var d_amount = 3;
+
+        var e_name = 2;
+        var e_amount = 4;
+
+        function textboxCreate_donor()
+        {
+            var d_box = document.createElement("INPUT");
+            d_box.setAttribute("type", "text");
+            d_box.setAttribute("placeholder", "name of donor");
+            d_box.setAttribute("id", d_name.toString());
+            d_box.setAttribute("name", d_name.toString());
+
+            var d_box_amount = document.createElement("INPUT");
+            d_box_amount.setAttribute("type", "text");
+            d_box_amount.setAttribute("placeholder", "donation amount");
+            d_box_amount.setAttribute("id", d_amount.toString());
+            d_box_amount.setAttribute("name", d_amount.toString());
+
+            document.getElementById("donor-box").appendChild(d_box);
+            document.getElementById("donor-box").appendChild(d_box_amount);
+
+            d_name = d_name + 2;
+            d_amount = d_amount + 2;
+        }
+
+        function textboxCreate_expense()
+        {
+            var e_box = document.createElement("INPUT");
+            e_box.setAttribute("type", "text");
+            e_box.setAttribute("placeholder", "name of expense");
+            e_box.setAttribute("id", e_name.toString());
+            e_box.setAttribute("name", e_name.toString());
+
+
+            var e_box_amount = document.createElement("INPUT");
+            e_box_amount.setAttribute("type", "text");
+            e_box_amount.setAttribute("placeholder", "expense amount");
+            e_box_amount.setAttribute("id", e_amount.toString());
+            e_box_amount.setAttribute("name", e_amount.toString());
+
+
+            document.getElementById("expense-box").appendChild(e_box);
+            document.getElementById("expense-box").appendChild(e_box_amount);
+
+            e_name = e_name + 2;
+            e_amount = e_amount + 2;
+        }
+        function textboxDelete_donor()
+        {
+            var div_element = document.getElementById("donor-box");
+
+            if ((d_name > 1) && (d_amount > 3))
+            {
+                d_name = d_name - 2;
+                d_amount = d_amount - 2;
+
+                var child1 = document.getElementById(d_name.toString());
+                div_element.removeChild(child1);
+
+                var child2 = document.getElementById(d_amount.toString());
+                div_element.removeChild(child2);
+            }
+        }
+        function textboxDelete_expense()
+        {
+            var div_element = document.getElementById("expense-box");
+
+            if ((e_name > 2) && (e_amount > 4))
+            {
+                e_name = e_name - 2;
+                e_amount = e_amount - 2;
+
+                var child3 = document.getElementById(e_name.toString());
+                div_element.removeChild(child3);
+                
+                var child4 = document.getElementById(e_amount.toString());
+                div_element.removeChild(child4);
+            }
+        }
+
+    </script
+
+</body>
+</html>

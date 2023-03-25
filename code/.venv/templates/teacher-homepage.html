@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href = "../static/style-teacher-homepage.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <title>Home</title>
+
+</head>
+<body>
+    <div class = "nav-bar">
+        <img src = "../static/taleem-gah logo.png" class = "logo" width = 220px>
+        <a class = "show" href = "{{url_for('login')}}">Log Out</a>
+
+        <div class = "rectangle">
+            {% if session['user_info_name'] %}
+                <h1>Welcome {{ session['user_info_name'] }}</h1>
+            {% endif %}
+        </div>   
+    </div>
+    
+    <div class = "body">
+        <div class="info">
+            <a class="report-btn" href = "{{url_for('class_picker')}}">Generate Report Card</a>
+            <a class="records-btn" href = "{{url_for('student_records')}}">View Records</a>
+            <a class="add-btn" href = "{{url_for('add_student_records')}}">Add Records</a>
+        </div>      
+    </div> 
+</body>
+</html>

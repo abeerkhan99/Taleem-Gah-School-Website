@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href = "../static/style-login.css">
+    <title>View Financials</title>
+
+</head>
+<body>
+    <div class="main">
+        <div class = "container">
+            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
+            <a href = "{{url_for('home')}}">go back</a>
+
+        </div>
+
+
+        <div class ="rectangle">
+        {% if message %}
+                <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
+    
+            <div class="form">
+                <form action = "/financial_date_submit" method = "POST">
+                    <label>From</label>
+                    <select name="start_financial_month" id="s_f_month" placeholder = "Select Month">
+                        <option value="1">January</option>
+                        <option value="2">Febuary</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    
+                    <select name="start_financial_year" id="s_f_year" placeholder = "Select Year">
+                        {% for y in year %}
+                        <option value = "{{y}}">{{y}}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <label>To</label>
+                    <select name="end_financial_month" id="e_f_month" placeholder = "Select Month">
+                        <option value="1">January</option>
+                        <option value="2">Febuary</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    
+                    <select name="end_financial_year" id="e_f_year" placeholder = "Select Year">
+                        {% for y in year %}
+                        <option value = "{{y}}"</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <input type="submit" value="Generate Financials">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

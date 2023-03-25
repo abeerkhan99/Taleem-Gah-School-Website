@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity= "sha512vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="nav-bar">
+      <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+            <div class="container">
+                
+                {% if message %}
+                    <p id = "message"> {{ message | safe }} </p>
+                {% endif %}
+
+                <label id = "message-label"></label>
+                <br>
+                
+                <form action = "/create-a-report-card-submit" method = "POST">
+                    <input type="text"  name = 'student_firstname'  placeholder = "Student First Name" required>
+                    <input type="text"  name = 'student_lastname'  placeholder = "Student Last Name" required>
+                    <input type="text"  name = 'classname'  value="{{classes}}" readonly>
+                    <input type="text"  name = 'semestername'  value="Semester {{semester}}" readonly>
+
+                    <input type="number" id = "t_working_days" name = 'totalworkingdays' placeholder = "Total Working Days" required>
+                    <input type="number" id = "s_attendance" name = 'studentattendance' placeholder = "Student Attendance" required>
+
+                    <table id = "report-card">
+                        <tr>
+                            <th>Subject</th>
+                            <th>Obtained Marks </th>
+                            <th>Passing Marks</th>
+                            <th>Total Marks</th>
+                        </tr>
+                        
+                        {% set count = namespace(value = 0) %}
+                        {% set idcount = namespace(value = 0) %}
+
+                        {% for x in subjects %}
+                        <tr>
+                            <td><input type="text"  name = "{{count.value}}"  value="{{x[0]}}" readonly></td>
+                            {% set count.value = count.value + 1 %}
+
+                            <td><input type="number" id = "{{idcount.value}}"  name = "{{count.value}}"  placeholder = "Obtained Marks" required oninput = "total_obtained_marks();"></td>
+                            {% set count.value = count.value + 1 %}
+                            {% set idcount.value = idcount.value + 1 %}
+
+
+                            <td><input type="number" id = "{{idcount.value}}"  name = "{{count.value}}"  placeholder = "Passing Marks" required oninput = "total_obtained_marks();"></td>
+                            {% set count.value = count.value + 1 %}
+                            {% set idcount.value = idcount.value + 1 %}
+
+                            <td><input type="number" id = "{{idcount.value}}" name = "{{count.value}}"  placeholder = "Total Marks" required oninput = "total_obtained_marks();"></td>
+                            {% set count.value = count.value + 1 %}
+                            {% set idcount.value = idcount.value + 1 %}
+
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                </form>
+                
+                <table id = "results">
+                    <tr>
+                        <th>Total Obtained Marks</th>
+                        <th>Total Marks</th>
+                        <th>Overall Percentage</th>
+                        <th>Grade Received</th>
+                    </tr>
+
+                    <tr>
+                        <th><input type="text" id="t_obtained_marks" name="TextBox1" readonly></th>
+                        <th><input type="text" id="t_marks" name="TextBox2" readonly></th>
+                        <th><input type="text" id="o_percentage" name="TextBox3" readonly></th>
+                        <th><input type="text" id="grade_r" name="TextBox4" readonly></th>
+                    </tr>
+                </table>   
+
+                <label id = "result-label"></label>
+                <br>
+                
+                <label id = "result-label2"></label>
+                <br>
+                <input type = "submit" class = "generate" onclick = "ToSubmit();" value = "Generate Report Card">
+                <!-- <button class="btn btn-primary" class = "download" onclick="GeneratePdf();" disabled>Download Report Card</button> -->
+           </div>  
+        </div> 
+    </div>
+
+    <script>
+        function total_obtained_marks()
+        {
+            var index = 0;
+            var index1 = 2;
+            var totalmarks = 0;
+            var total_obtained = 0;
+            for (let i = 0; i<{{length_subject}}; i++)
+            {
+                var Num1 = document.getElementById(index.toString());
+                var total_obtained = total_obtained + parseInt(Num1.value);
+                var index = index + 3;
+
+                var Num2 = document.getElementById(index1.toString());
+                var totalmarks = totalmarks + parseInt(Num2.value);
+                var index1 = index1 + 3;
+
+            }
+            document.getElementById('t_obtained_marks').value = total_obtained;
+            document.getElementById('t_marks').value = totalmarks;
+            var overall_percentage = (total_obtained / totalmarks)*100;
+            document.getElementById('o_percentage').value = overall_percentage.toFixed(2) + "%";
+
+            if(overall_percentage >= 90 && overall_percentage <= 100)
+            {
+                document.getElementById('grade_r').value = "A";
+            }
+            else if (overall_percentage >= 80 && overall_percentage <= 89)
+            {
+                document.getElementById('grade_r').value = "B";
+            }
+            else if (overall_percentage >= 70 && overall_percentage <= 79)
+            {
+                document.getElementById('grade_r').value = "C";
+            }
+            else if (overall_percentage >= 60 && overall_percentage <= 69)
+            {
+                document.getElementById('grade_r').value = "D";
+            }
+            else if (overall_percentage >= 50 && overall_percentage <= 59)
+            {
+                document.getElementById('grade_r').value = "E";
+            }
+            else
+            {
+                document.getElementById('grade_r').value = "F";
+            }
+            
+        }
+    </script>
+    <script>
+        function checkMarks(length_subject)
+        {
+            var index = 0;
+            for (let i = 0; i < length_subject; i++)
+            {
+                // obtained
+                var Num1 = document.getElementById(index.toString());
+            
+                // passing
+                index++;
+                var Num2 = document.getElementById(index.toString()); 
+
+                // total
+                index++;
+                var Num3 = document.getElementById(index.toString());
+                index++;
+
+                if(Num1.value == '' || Num2.value == '' || Num3.value == '')
+                {
+                    document.getElementById('result-label').innerHTML = "Some marks are missing! Please ensure all marks have been added";
+                    document.getElementById('result-label').style.color = "red"; 
+                    return false;
+                    break;
+                }
+
+                else if ((parseInt(Num1.value) > parseInt(Num3.value)) || (parseInt(Num2.value) > parseInt(Num3.value)))
+                {
+                    document.getElementById('result-label').innerHTML = "Passing and Obtained marks should be less than Total marks!";
+                    document.getElementById('result-label').style.color = "red";
+                    return false;
+                    break;
+                }
+                else if ((parseInt(Num1.value) <= parseInt(Num3.value)) && (parseInt(Num2.value) <= parseInt(Num3.value)))
+                {
+                    return true;
+                }
+            }            
+        }
+    </script>
+
+    <script>
+        function check_attendance()
+        {
+            var TotalDays = document.getElementById('t_working_days');
+            var Attendance = document.getElementById('s_attendance');
+
+            if (TotalDays.value == '' || Attendance.value == '') 
+            {
+                document.getElementById('result-label2').innerHTML = "Please enter student attendance and total working days!";
+                document.getElementById('result-label2').style.color = "red";
+                return false;
+            } 
+
+            else if (parseInt(TotalDays.value) < (parseInt(Attendance.value)))
+            {
+                document.getElementById('result-label2').innerHTML = "Student attendance cannot be greater than total working days!";
+                document.getElementById('result-label2').style.color = "red";
+                return false;
+            }
+            else
+            {
+                return true;
+            }           
+        }
+    </script>
+
+    <script>
+        function ToSubmit()
+        {
+        
+            if (check_attendance() && checkMarks({{length_subject}}))
+            {
+                document.getElementById('result-label2').innerHTML = null;
+                document.getElementById('result-label').innerHTML = null;
+                alert("WORK");
+                $.ajax({
+                    url: '/create-a-report-card-submit',
+                    type: 'POST',
+                    data: $('form').serialize(),
+                    success: function(response) {
+                        if (response.message == "Not able to add report card in the system.")
+                        {
+                            document.getElementById('message-label').innerHTML = "Not able to add report card in the system.";
+                            document.getElementById('message-label').style.color = "red";
+                        }
+                        else if (response.message == "Report card generated! Would you like to generate another one?")
+                        {
+                            document.getElementById('message-label').innerHTML = "Report card generated! Would you like to generate another one?";
+                            document.getElementById('message-label').style.color = "green";
+                            on_click_event();
+                        }  
+                    }
+                });
+
+                return true;
+            }
+
+            else if (!check_attendance() && checkMarks({{length_subject}}))
+            {
+                document.getElementById('result-label').innerHTML = null;
+                document.getElementById('message-label').innerHTML = null;
+
+                return false;
+
+            }
+            
+            else if (check_attendance() && !checkMarks({{length_subject}}))
+            {
+                document.getElementById('result-label2').innerHTML = null;
+                document.getElementById('message-label').innerHTML = null;
+                return false;
+                
+            }
+            else
+            {
+                return false;
+            }
+        }
+    </script>
+
+    <script>          
+        function on_click_event()
+        {
+            if (confirm("Do you want to download the report card?"))
+            {
+                $.ajax({
+                    url:"/generate-pdf",
+                    context: document.body
+                });
+            }
+        }
+    </script>
+</body>
+</html>

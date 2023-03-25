@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Records</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel = "stylesheet" href = "../static/style-financials-homepage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="nav-bar">
+        <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+        <a class = "show" href = "{{url_for('admin_homepage')}}">go back</a>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+               <div class="container">
+               
+                <div class="info">
+                    <a class="create-financials-btn" href = "{{url_for('create_financials')}}">Add Financials</a>
+                    <a class="view-financials-btn" href = "{{url_for('financial_date_select')}}">View Financials</a>
+                    <a class="edit-financials-btn" href = "{{url_for('edit_view_financials')}}">Edit Financials</a>
+                </div>  
+             </div>
+        </div>  
+
+        
+    </div>
+</body>
+</html>
+

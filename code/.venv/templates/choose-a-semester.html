@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div class="nav-bar">
+      <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+    </div>
+    
+    
+    <div class="body">
+        <div id="loginform">
+            <div class="container">
+                
+                {% if message %}
+                    <p class = "message"> {{ message | safe }} </p>
+                {% endif %}
+                
+                <form action = "/create-a-report-card" method = "POST">
+                    <input list="semester_name" placeholder = "Choose Semester" name = "s_name" required>
+                        <datalist id="semester_name">
+                        {% for x in semester%}
+                            <option value="{{x[0]}}">
+                        {% endfor %}
+                        </datalist>
+
+                    <input type="submit" value="Next">
+                </form>
+
+           </div>  
+        </div> 
+    </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <title>View Financials</title>
+
+</head>
+<body>
+    <div class="main">
+        <div class = "container">
+            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
+            <a href = "{{url_for('home')}}">go back</a>
+
+        </div>
+
+
+        <div class ="rectangle">
+        {% if message %}
+                <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
+    
+            <div class="form">
+                <form action = "/create-financials-submit" method = "POST">
+                    <label>Choose Month</label>
+                    <select name="add_financial_month" id="a_f_month" placeholder = "Select Month">
+                        <option value="1">January</option>
+                        <option value="2">Febuary</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    
+                    <label>Choose Year</label>
+                    <select name="add_financial_year" id="a_f_year" placeholder = "Select Year">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+
+                    <label>Donations</label>
+
+                    <a class="donation-btn" href = "javascript:textboxCreate_donor()">Add Donation</a>
+                    <a class="donation-btn" href = "javascript:textboxDelete_donor()">Delete Donation</a>
+
+                    <input type = "text" id = "name_donation" name = "name_donation">
+                    <input type = "text" id = "donation_amount" name = "donation_amount">
+
+                    <div id="donor-box"></div>
+                    
+                    <label>Expenses</label>
+                    <a class = "donation-btn" href = "javascript:textboxCreate_expense()">Add Expense</a>
+                    <a class = "donation-btn" href = "javascript:textboxDelete_expense()">Delete Expense</a>
+
+                    <input type = "text" id = "name_expense" name = "name_expense">
+                    <input type = "text" id = "expense_amount" name = "expense_amount">
+
+                    <div id="expense-box"></div>
+                    
+                    <input type="submit" value="Add Financials">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var d_name = 1;
+        var d_amount = 3;
+
+        var e_name = 2;
+        var e_amount = 4;
+
+        function textboxCreate_donor()
+        {
+            var d_box = document.createElement("INPUT");
+            d_box.setAttribute("type", "text");
+            d_box.setAttribute("placeholder", "name of donor");
+            d_box.setAttribute("id", d_name.toString());
+            d_box.setAttribute("name", d_name.toString());
+
+            var d_box_amount = document.createElement("INPUT");
+            d_box_amount.setAttribute("type", "text");
+            d_box_amount.setAttribute("placeholder", "donation amount");
+            d_box_amount.setAttribute("id", d_amount.toString());
+            d_box_amount.setAttribute("name", d_amount.toString());
+
+            document.getElementById("donor-box").appendChild(d_box);
+            document.getElementById("donor-box").appendChild(d_box_amount);
+
+            d_name = d_name + 2;
+            d_amount = d_amount + 2;
+        }
+
+        function textboxCreate_expense()
+        {
+            var e_box = document.createElement("INPUT");
+            e_box.setAttribute("type", "text");
+            e_box.setAttribute("placeholder", "name of expense");
+            e_box.setAttribute("id", e_name.toString());
+            e_box.setAttribute("name", e_name.toString());
+
+
+            var e_box_amount = document.createElement("INPUT");
+            e_box_amount.setAttribute("type", "text");
+            e_box_amount.setAttribute("placeholder", "expense amount");
+            e_box_amount.setAttribute("id", e_amount.toString());
+            e_box_amount.setAttribute("name", e_amount.toString());
+
+
+            document.getElementById("expense-box").appendChild(e_box);
+            document.getElementById("expense-box").appendChild(e_box_amount);
+
+            e_name = e_name + 2;
+            e_amount = e_amount + 2;
+        }
+        function textboxDelete_donor()
+        {
+            var div_element = document.getElementById("donor-box");
+
+            if ((d_name > 1) && (d_amount > 3))
+            {
+                d_name = d_name - 2;
+                d_amount = d_amount - 2;
+
+                var child1 = document.getElementById(d_name.toString());
+                div_element.removeChild(child1);
+
+                var child2 = document.getElementById(d_amount.toString());
+                div_element.removeChild(child2);
+            }
+        }
+        function textboxDelete_expense()
+        {
+            var div_element = document.getElementById("expense-box");
+
+            if ((e_name > 2) && (e_amount > 4))
+            {
+                e_name = e_name - 2;
+                e_amount = e_amount - 2;
+
+                var child3 = document.getElementById(e_name.toString());
+                div_element.removeChild(child3);
+                
+                var child4 = document.getElementById(e_amount.toString());
+                div_element.removeChild(child4);
+            }
+        }
+
+    </script
+
+</body>
+</html>
+
+//https://stackoverflow.com/questions/10603644/check-if-a-form-input-exists

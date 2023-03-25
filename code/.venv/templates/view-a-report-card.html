@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <link rel = "stylesheet" href = "../static/style-login.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <title>Welcome Admin</title>
+
+</head>
+<body>
+    <img src = "../static/taleem-gah logo.png" class = "logo"></img>
+    <a href = "{{url_for('login')}}">Log Out</a>
+
+    
+    <form action = "/edit-a-report-card" method = "POST" id = "form-print">
+        <div class="info">
+            <label id = "result-label">First Name</label>
+            <input type="text"  name = 'student_firstname'  value="{{firstname}}" readonly>
+            <label id = "result-label">Last Name</label>
+            <input type="text"  name = 'student_lastname'  value="{{lastname}}" readonly>
+            <label id = "result-label">Class</label>
+            <input type="text"  name = 'classname'  value="{{classname}}" readonly>
+            <label id = "result-label">Semester</label>
+            <input type="text"  name = 'semestername'  value="Semester {{semestername}}" readonly>
+
+            <label id = "result-label">Total Working Days</label>
+            <input type="number"  name = 'totalworkingdays'  value = {{attendance[0][0]}} readonly>
+            <label id = "result-label">Attendance</label>
+            <input type="number"  name = 'studentattendance' value = {{attendance[0][1]}} readonly>
+
+            <br>
+
+            <table id = "report-card">
+                <tr>
+                    <th>Subject</th>
+                    <th>Obtained Marks </th>
+                    <th>Passing Marks</th>
+                    <th>Total Marks</th>
+                </tr>
+                
+                {% set idcount = namespace(value = 0) %}
+                {% for x in marks %}
+                <tr>
+                    <td><input type="text"  name = "{{x[0]}}"  value="{{x[0]}}" readonly></td>
+
+                    <td><input type="text"  id = "{{idcount.value}}" name = "{{x[1]}}"  value="{{x[1]}}" readonly oninput = findTotal()></td>
+
+                    {% set idcount.value = idcount.value + 1 %}
+                    <td><input type="text" id = "{{idcount.value}}"  name = "{{x[2]}}"  value="{{x[2]}}" readonly oninput = findTotal()></td>
+
+                    {% set idcount.value = idcount.value + 1 %}
+                    <td><input type="text" id = "{{idcount.value}}" name = "{{x[3]}}"  value="{{x[3]}}" readonly oninput = findTotal()></td>
+                    {% set idcount.value = idcount.value + 1 %}
+
+                </tr>
+                {% endfor %}
+            </table>
+
+            <table id = "results">
+                <tr>
+                    <th>Total Obtained Marks</th>
+                    <th>Total Marks</th>
+                    <th>Overall Percentage</th>
+                    <th>Grade Received</th>
+                </tr>
+
+                <tr>
+                    <th><input type="text" id="t_obtained_marks" name="TextBox1" readonly></th>
+                    <th><input  type="text" id="t_marks" name="TextBox2" readonly></th>
+                    <th><input type="text" id="o_percentage" name="TextBox3" readonly></th>
+                    <th><input type="text" id="grade_r" name="TextBox4" readonly></th>
+                </tr>
+            </table>   
+
+            <input type="button" onclick="on_clickevent()" value="Download Report Card">
+            <input type = "submit" value = "Edit">
+        </div> 
+    </form> 
+
+    <script>
+        function findTotal()
+        {
+            var index = 0;
+            var index1 = 2;
+            var totalmarks = 0;
+            var total_obtained = 0;
+            for (let i = 0; i<{{length}}; i++)
+            {
+                var Num1 = document.getElementById(index.toString());
+                var total_obtained = total_obtained + parseInt(Num1.value);
+                var index = index + 3;
+
+                var Num2 = document.getElementById(index1.toString());
+                var totalmarks = totalmarks + parseInt(Num2.value);
+                var index1 = index1 + 3;
+            }
+            document.getElementById('t_obtained_marks').value = total_obtained;
+            document.getElementById('t_marks').value = totalmarks;
+            var overall_percentage = (total_obtained / totalmarks)*100;
+            document.getElementById('o_percentage').value = overall_percentage.toFixed(2) + "%";
+
+            if(overall_percentage >= 90 && overall_percentage <= 100)
+            {
+                document.getElementById('grade_r').value = "A";
+            }
+            else if (overall_percentage >= 80 && overall_percentage <= 89)
+            {
+                document.getElementById('grade_r').value = "B";
+            }
+            else if (overall_percentage >= 70 && overall_percentage <= 79)
+            {
+                document.getElementById('grade_r').value = "C";
+            }
+            else if (overall_percentage >= 60 && overall_percentage <= 69)
+            {
+                document.getElementById('grade_r').value = "D";
+            }
+            else if (overall_percentage >= 50 && overall_percentage <= 59)
+            {
+                document.getElementById('grade_r').value = "E";
+            }
+            else
+            {
+                document.getElementById('grade_r').value = "F";
+            }
+        }
+        findTotal();
+    </script>
+
+    <script>
+        function on_clickevent(){
+            $.ajax({
+                url:"/generate-pdf",
+                context: document.body});}
+    </script>
+
+</body>
+
+</html>

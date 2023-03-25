@@ -1,0 +1,52 @@
+from ast import excepthandler
+from hmac import new
+from pickletools import read_uint1
+from flask import Flask, render_template, url_for, request, session, redirect
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import LABEL_STYLE_TABLENAME_PLUS_COL, create_engine, delete
+from sqlalchemy.orm import Session
+import os
+import psycopg2
+from fpdf import FPDF
+import pandas as pd
+import financials
+import datetime
+from pdf import my_pdf
+from app import app
+from app import conn, cur
+
+@app.route('/select-date')
+def financial_date_select():
+
+    if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin'):
+        
+        years = financials.main("info", [datetime.datetime.today()])
+        return render_template('financial-sheet.html', year = years)
+
+    else:
+        return redirect(url_for('login', message = "Please login."))
+    # return 'Hello World!'
+
+@app.route('/financial_date_submit', methods = ['GET', 'POST'])
+def financial_date_submit():
+    if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin'):
+        
+        if request.method == 'POST':
+            start_month = int(request.form.get('start_financial_month'))
+            start_year = int(request.form.get('start_financial_year'))
+
+            end_month = int(request.form.get('end_financial_month'))
+            end_year = int(request.form.get('end_financial_year'))
+  
+            # retrieve info from csv file using dates given
+            balance_info = financials.main('total', [datetime.datetime(start_year, start_month, 12)], [datetime.datetime(end_year, end_month, 12)])
+
+            if balance_info == [0]:
+                return render_template('financial-sheet.html', message = "No records present for these months")
+            else:
+                return render_template('view-financial-records.html', balance = balance_info, start_month = start_month, start_year = start_year, end_month = end_month, end_year = end_year, len_balance = len(balance_info)-1)
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
+
+    

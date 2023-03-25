@@ -1,0 +1,122 @@
+.nav-bar
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 15vh;
+  background-color: #E5E5E5;
+}
+
+.logo
+{
+  margin: 15px;
+  width: 15vw;
+  display: inline-block;
+  position: absolute;
+}
+
+.show 
+{  
+  position: absolute;
+  margin-top: 3vh;
+  right: 2vw;
+  background-color: #597906;
+  color: white;
+  padding: 1.5vw 2.8vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 45px;
+  font-family: 'Roboto Mono';
+  font-size: 2.2vh;
+}
+
+
+body
+{
+  background-color: #E5E5E5;
+  font-family: 'Roboto Mono';
+}
+.body
+{
+  width: 250px;
+  margin: auto;
+  margin-top: 25vh;
+  text-align: center;
+}
+
+.info input
+{
+  font-family: 'Roboto Mono';
+  border:none;
+  outline: none;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+input[type=submit] 
+{
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Roboto Mono';
+  font-weight: bold;
+  color: white;
+}
+
+input[type=submit]:hover 
+{
+  background-color: #597906;
+  border-radius: 6px;
+}
+
+#loginform p
+{
+  font-family: 'Roboto Mono';
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+}
+
+#loginform a
+{
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+#footer
+{
+  margin-top: -25px;
+}
+
+#footer p
+{
+  color: green;
+  font-size: 15px;
+}
+
+#footer p a
+{
+  color: green;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+input[type=password], input[type=text] 
+{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
