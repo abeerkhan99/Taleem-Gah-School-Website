@@ -20,10 +20,10 @@ app.secret_key = 'BAD_SECRET_KEY'
 
 def get_db_connection():
     conn = psycopg2.connect(
-            host="localhost",
-            database="taleem-gah",
-            user= 'postgres',
-            password= '12345')
+            host="dpg-cgg47nu4daddcg25rtj0-a",
+            database="taleemgah",
+            user= 'taleemgah_user',
+            password= 'S0qoU8kEq04dYNe1q43RQJgmbyZ77BC4')
 
     return conn
 
