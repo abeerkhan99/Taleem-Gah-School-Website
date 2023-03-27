@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project</title>
+    <title>Create Report Card</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel = "stylesheet" href = "../static/style-create-report-card.css">
     <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity= "sha512vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -11,17 +12,19 @@
 
     <div class="nav-bar">
       <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+      <div class = "bar-button">
+        <a class = "show" href = "{{url_for('class_picker')}}">go back</a>
+        <a class = "show" href = "{{url_for('login')}}">Log Out</a>
+      </div>
     </div>
     
-    
     <div class="body">
+        {% if message %}
+            <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
         <div id="loginform">
             <div class="container">
                 
-                {% if message %}
-                    <p id = "message"> {{ message | safe }} </p>
-                {% endif %}
-
                 <label id = "message-label"></label>
                 <br>
                 
@@ -166,7 +169,7 @@
 
                 if(Num1.value == '' || Num2.value == '' || Num3.value == '')
                 {
-                    document.getElementById('result-label').innerHTML = "Some marks are missing! Please ensure all marks have been added";
+                    document.getElementById('result-label').innerHTML = "Some marks are missing! Please ensure all marks have been added.";
                     document.getElementById('result-label').style.color = "red"; 
                     return false;
                     break;

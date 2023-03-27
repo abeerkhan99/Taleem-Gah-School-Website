@@ -1,5 +1,57 @@
+.nav-bar
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 15vh;
+  background-color: #E5E5E5;
+}
+
+p.message {
+  color: black;
+}
+
+.logo
+{
+  margin: 15px;
+  width: 15vw;
+  display: inline-block;
+  position: absolute;
+}
+
+.show 
+{  
+  position: absolute;
+  margin-top: 3vh;
+  right: 2vw;
+  background-color: #597906;
+  color: white;
+  padding: 1.5vw 2.8vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 45px;
+  font-family: 'Roboto Mono';
+  font-size: 2.2vh;
+}
+
+
+body
+{
+  background-color: #E5E5E5;
+  font-family: 'Roboto Mono';
+}
+.body
+{
+  width: 850px;
+  margin: auto;
+  margin-top: 15vh;
+  text-align: center;
+}
+
 #customers {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
@@ -9,15 +61,14 @@
     padding: 8px;
   }
   
-  #customers tr:nth-child(even){background-color: #f2f2f2;}
   
   #customers tr:hover {background-color: #ddd;}
   
   #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
-    background-color: #04AA6D;
+    text-align: center;
+    background-color: black;
     color: white;
   }
 
@@ -31,3 +82,27 @@
     opacity: 1;
     left: 50%;
   }
+  
+  
+input[type=submit] 
+{
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 50%;
+  font-family: 'Roboto Mono';
+  font-weight: bold;
+  color: white;
+}
+
+input[type=submit]:hover 
+{
+  background-color: #597906;
+  border-radius: 6px;
+}
+  

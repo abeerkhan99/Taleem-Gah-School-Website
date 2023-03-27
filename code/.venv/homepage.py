@@ -15,17 +15,25 @@ from pdf import my_pdf
 from app import app
 from app import conn, cur
 
-
-@app.route('/admin-homepage')
-def admin_homepage():
+@app.route('/homepage')
+def homepage():
     if len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0 and session.get('user_info_type') == 'Admin':
         return render_template('admin-homepage.html')
+    elif len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0 and session.get('user_info_type') == 'Teacher':
+        return render_template('teacher-homepage.html')
     else:
         return redirect(url_for('login'))
 
-@app.route('/teacher-homepage')
-def teacher_homepage():
-    if len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0 and session.get('user_info_type') == 'Teacher':
-        return render_template('teacher-homepage.html')
-    else:
-        return render_template('login')
+# @app.route('/admin-homepage')
+# def admin_homepage():
+#     if len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0 and session.get('user_info_type') == 'Admin':
+#         return render_template('admin-homepage.html')
+#     else:
+#         return redirect(url_for('login'))
+
+# @app.route('/teacher-homepage')
+# def teacher_homepage():
+#     if len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0 and session.get('user_info_type') == 'Teacher':
+#         return render_template('teacher-homepage.html')
+#     else:
+#         return render_template('login')

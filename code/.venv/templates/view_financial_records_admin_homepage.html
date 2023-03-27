@@ -10,9 +10,11 @@
 
     <div class="nav-bar">
         <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
-        <a class = "show" href = "{{url_for('admin_homepage')}}">go back</a>
+        <div class = "bar-button">
+            <a class = "show" href = "{{url_for('homepage')}}">go back</a>
+            <a class = "show" href = "{{url_for('login')}}">Log Out</a>
+        </div>
     </div>
-    
     
     <div class="body">
         <div id="loginform">

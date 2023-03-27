@@ -37,14 +37,26 @@ def financial_date_submit():
 
             end_month = int(request.form.get('end_financial_month'))
             end_year = int(request.form.get('end_financial_year'))
+
+            donationcount = 0
+            expensecount = 0
   
             # retrieve info from csv file using dates given
             balance_info = financials.main('total', [datetime.datetime(start_year, start_month, 12)], [datetime.datetime(end_year, end_month, 12)])
 
+            for x in range(len(balance_info)-1):
+                if balance_info[x][2][1] > 0:
+                    donationcount += 1
+                
+                elif balance_info[x][2][1] < 0:
+                    expensecount += 1
+                    
+            print(donationcount, expensecount)
+
             if balance_info == [0]:
                 return render_template('financial-sheet.html', message = "No records present for these months")
             else:
-                return render_template('view-financial-records.html', balance = balance_info, start_month = start_month, start_year = start_year, end_month = end_month, end_year = end_year, len_balance = len(balance_info)-1)
+                return render_template('view-financial-records.html', donationcount = donationcount, expensecount = expensecount, balance = balance_info, start_month = start_month, start_year = start_year, end_month = end_month, end_year = end_year, len_balance = len(balance_info)-1)
     else:
         return redirect(url_for('login', message = "Please login."))
 

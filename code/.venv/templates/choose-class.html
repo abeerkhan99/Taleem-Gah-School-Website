@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project</title>
+    <title>Choose a Class</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel = "stylesheet" href = "../static/style-choose-class.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
     <div class="nav-bar">
       <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+      <div class = "bar-button">
+        <a class = "show" href = "{{url_for('homepage')}}">go back</a>
+        <a class = "show" href = "{{url_for('login')}}">Log Out</a>
+      </div>
     </div>
     
     
     <div class="body">
+        {% if message %}
+            <p class = "message"> {{ message | safe }} </p>
+        {% endif %}
         <div id="loginform">
             <div class="container">
-                
-                {% if message %}
-                    <p class = "message"> {{ message | safe }} </p>
-                {% endif %}
-                
                 <form action = "/choose-semester" method = "POST">
-                    <input list="class_name" placeholder = "Choose Class" name = "c_name">
+                    <input list="class_name" placeholder = "Choose Class" name = "c_name" required>
                         <datalist id="class_name">
                         {% for x in classes %}
                             <option value="{{x[0]}}">

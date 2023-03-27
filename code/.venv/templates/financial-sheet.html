@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <link rel = "stylesheet" href = "../static/style-login.css">
     <title>View Financials</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel = "stylesheet" href = "../static/style-create-report-card.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity= "sha512vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <div class="main">
-        <div class = "container">
-            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
-            <a href = "{{url_for('home')}}">go back</a>
 
+    <div class="nav-bar">
+        <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+        <div class = "bar-button">
+          <a class = "show" href = "{{url_for('financial_records_homepage')}}">go back</a>
+          <a class = "show" href = "{{url_for('login')}}">Log Out</a>
         </div>
+    </div>
 
-
-        <div class ="rectangle">
+    <div class="body">
         {% if message %}
-                <p class = "message"> {{ message | safe }} </p>
+            <p class = "message"> {{ message | safe }} </p>
         {% endif %}
-    
-            <div class="form">
+
+        <div id ="loginform">    
+            <div class="container">
                 <form action = "/financial_date_submit" method = "POST">
                     <label>From</label>
                     <select name="start_financial_month" id="s_f_month" placeholder = "Select Month">
@@ -61,7 +67,7 @@
                     
                     <select name="end_financial_year" id="e_f_year" placeholder = "Select Year">
                         {% for y in year %}
-                        <option value = "{{y}}"</option>
+                        <option value = "{{y}}"></option>
                         {% endfor %}
                     </select>
                     
@@ -70,6 +76,7 @@
                 </form>
             </div>
         </div>
+
     </div>
 </body>
 </html>

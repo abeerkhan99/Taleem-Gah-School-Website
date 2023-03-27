@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <title>View Financials</title>
+    <title>Create a Financial Record</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel = "stylesheet" href = "../static/style-create-report-card.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity= "sha512vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <div class="main">
-        <div class = "container">
-            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
-            <a href = "{{url_for('home')}}">go back</a>
 
+    <div class="nav-bar">
+        <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+        <div class = "bar-button">
+          <a class = "show" href = "{{url_for('financial_records_homepage')}}">go back</a>
+          <a class = "show" href = "{{url_for('login')}}">Log Out</a>
         </div>
-
-
-        <div class ="rectangle">
+      </div>
+      
+    <div class="body">
         {% if message %}
-                <p class = "message"> {{ message | safe }} </p>
+            <p class = "message"> {{ message | safe }} </p>
         {% endif %}
-    
-            <div class="form">
+        <div id ="loginform">
+            <div class="container">
                 <form action = "/create-financials-submit" method = "POST">
                     <label>Choose Month</label>
                     <select name="add_financial_month" id="a_f_month" placeholder = "Select Month">
@@ -42,20 +48,27 @@
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
                     </select>
-
-                    <label>Donations</label>
-
-                    <a class="donation-btn" href = "javascript:textboxCreate_donor()">Add Donation</a>
-                    <a class="donation-btn" href = "javascript:textboxDelete_donor()">Delete Donation</a>
+                    
+                    <div class = "container2">
+                    
+                      <label>Donations</label>
+                    
+                    <div class = "links-container">
+                      <a id = "link1" class="donation-btn" href = "javascript:textboxCreate_donor()">Add Donation</a>
+                      <a id = "link2" class="donation-btn" href = "javascript:textboxDelete_donor()">Delete Donation</a>
+                    </div>
 
                     <input type = "text" id = "name_donation" name = "name_donation">
                     <input type = "text" id = "donation_amount" name = "donation_amount">
 
-                    <div id="donor-box"></div>
+                    <div id="donor-box"></div>   
                     
                     <label>Expenses</label>
-                    <a class = "donation-btn" href = "javascript:textboxCreate_expense()">Add Expense</a>
-                    <a class = "donation-btn" href = "javascript:textboxDelete_expense()">Delete Expense</a>
+                    <div class = "links-container">
+                        <a id = "link1" class = "donation-btn" href = "javascript:textboxCreate_expense()">Add Expense</a>
+                        <a id = "link2" class = "donation-btn" href = "javascript:textboxDelete_expense()">Delete Expense</a>
+                    </div>
+                    
 
                     <input type = "text" id = "name_expense" name = "name_expense">
                     <input type = "text" id = "expense_amount" name = "expense_amount">
@@ -63,7 +76,12 @@
                     <div id="expense-box"></div>
                     
                     <input type="submit" value="Add Financials">
+                  
                     
+                    </div>
+
+
+                      
                 </form>
             </div>
         </div>
@@ -153,9 +171,7 @@
             }
         }
 
-    </script
+    </script>
 
 </body>
 </html>
-
-//https://stackoverflow.com/questions/10603644/check-if-a-form-input-exists

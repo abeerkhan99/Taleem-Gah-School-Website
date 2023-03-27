@@ -81,10 +81,12 @@ def submit():
                     session['user_info_username'] = user_object_string
                     session['user_info_type'] = faculty_type[0][0]
 
-                    if faculty_type[0][0] == 'Admin': 
-                        return redirect(url_for('admin_homepage'))
-                    elif faculty_type[0][0] == 'Teacher':
-                        return redirect(url_for('teacher_homepage'))
+                    return redirect(url_for('homepage'))
+
+                    # if faculty_type[0][0] == 'Admin': 
+                    #     return redirect(url_for('admin_homepage'))
+                    # elif faculty_type[0][0] == 'Teacher':
+                    #     return redirect(url_for('teacher_homepage'))
     return 
 
 @app.route('/logout')

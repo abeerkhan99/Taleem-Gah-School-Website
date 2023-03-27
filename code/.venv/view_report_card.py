@@ -43,15 +43,25 @@ def choose_semester():
         return render_template('choose-semester.html', semester = list_of_semesters)
     else:
         return redirect(url_for('login', message = "Please login."))
+
+@app.route('/redirect', methods = ['GET', 'POST'])
+def redirection():
+    if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin' or session.get('user_info_type') == 'Teacher'):
+        
+        semester_name = request.form['s_name']
+        session['semester_name'] = semester_name
+
+        return redirect(url_for('view_report_cards'))
+
+    else:
+        return redirect(url_for('login', message = "Please login."))
+
     
 @app.route('/view-report-cards', methods = ['GET', 'POST'])
 def view_report_cards():
     if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin' or session.get('user_info_type') == 'Teacher'):
     
-        semester_name = request.form['s_name']
-        session['semester_name'] = semester_name
-
-        cur.execute('SELECT distinct FirstName, LastName from marks WHERE semester_Name = %s and class_Name = %s', (semester_name, session.get('class_name')))
+        cur.execute('SELECT distinct FirstName, LastName from marks WHERE semester_Name = %s and class_Name = %s', (session.get('semester_name'), session.get('class_name')))
         student_records_object = cur.fetchall()
 
         if len(student_records_object) == 0:
@@ -91,26 +101,25 @@ def view_a_report_card():
     else:
         return redirect(url_for('login', message = "Please login."))
     
+# @app.route('/edit-a-report-card', methods = ['GET', 'POST'])
+# def edit_a_report_card():
+#     if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin' or session.get('user_info_type') == 'Teacher'):
+#         if request.method == 'POST':
 
-@app.route('/edit-a-report-card', methods = ['GET', 'POST'])
-def edit_a_report_card():
-    if (len(session.get('user_info_name')) != 0 and len(session.get('user_info_username')) != 0) and (session.get('user_info_type') == 'Admin' or session.get('user_info_type') == 'Teacher'):
-        if request.method == 'POST':
+#             first_name = request.form['0']
+#             last_name = request.form['1']
 
-            first_name = request.form['0']
-            last_name = request.form['1']
+#             # fetch the subject marks
+#             cur.execute('SELECT subject_Name, Marks, Passing_Marks, Total_Marks from marks WHERE class_Name = %s and semester_Name = %s and FirstName = %s and LastName = %s', (session.get('class_name'), session.get('semester_name'), first_name, last_name))
+#             marks = cur.fetchall()
 
-            # fetch the subject marks
-            cur.execute('SELECT subject_Name, Marks, Passing_Marks, Total_Marks from marks WHERE class_Name = %s and semester_Name = %s and FirstName = %s and LastName = %s', (session.get('class_name'), session.get('semester_name'), first_name, last_name))
-            marks = cur.fetchall()
+#             # fetch student attendance
+#             cur.execute('SELECT totalWorkingDays, student_attendance from student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s', (first_name, last_name, session.get('class_name'), session.get('semester_name')))
+#             attendance = cur.fetchall()
 
-            # fetch student attendance
-            cur.execute('SELECT totalWorkingDays, student_attendance from student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s', (first_name, last_name, session.get('class_name'), session.get('semester_name')))
-            attendance = cur.fetchall()
-
-            return render_template('view-a-report-card.html', length = len(marks), id = session.get('student_id'), firstname = session.get('student_f_name') , lastname = session.get('student_l_name') , gender = session.get('student_g'), classname = class_name, semestername = semester_name, marks = marks, attendance = attendance)
-    else:
-        return redirect(url_for('login', message = "Please login."))
+#             return render_template('view-a-report-card.html', length = len(marks), id = session.get('student_id'), firstname = session.get('student_f_name') , lastname = session.get('student_l_name') , gender = session.get('student_g'), classname = class_name, semestername = semester_name, marks = marks, attendance = attendance)
+#     else:
+#         return redirect(url_for('login', message = "Please login."))
     
 @app.route('/delete-a-report-card', methods = ['GET', 'POST'])
 def delete_a_report_card():
@@ -121,25 +130,25 @@ def delete_a_report_card():
             last_name = request.form['1']
 
             # delete the subject marks
-            cur.execute("DELETE FROM marks WHERE FirstName = %s and LastName = %s and class_Name = %s and semester_Name = %s", first_name, last_name, session.get('semester_name'), session.get('class_name'))
+            cur.execute("DELETE FROM marks WHERE FirstName = %s and LastName = %s and class_Name = %s and semester_Name = %s", (first_name, last_name, session.get('class_name'), session.get('semester_name'),))
             conn.commit()
 
             # delete the attendance record
-            cur.execute("DELETE FROM student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s", first_name, last_name, session.get('class_name'), session.get('semester_name'))
+            cur.execute("DELETE FROM student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s", (first_name, last_name, session.get('class_name'), session.get('semester_name'),))
             conn.commit()
 
             # fetch all results for the semester and class 
-            cur.execute('SELECT distinct FirstName, LastName from marks WHERE semester_Name = %s and class_Name = %s', (session.get('semester_name'), session.get('class_name')))
+            cur.execute('SELECT distinct FirstName, LastName from marks WHERE semester_Name = %s and class_Name = %s', (session.get('semester_name'), session.get('class_name'),))
             student_records_object = cur.fetchall()
+            print(student_records_object)
 
             if len(student_records_object) == 0:
                 # No records found
-                return render_template('choose-class.html', message = "No records found for this class and semester.")
+                return render_template('choose-class.html', message = "No records found for this class and semester!")
             else:
-                return render_template('view-report-cards.html', len = len(student_records_object), student_records_object = student_records_object) 
+                return render_template('view-report-cards.html', len = len(student_records_object), student_records_object = student_records_object, message = "Report card deleted!") 
     else:
         return redirect(url_for('login', message = "Please login."))
-
 
 @app.route('/generate-pdf')
 def generate_pdf():

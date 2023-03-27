@@ -17,9 +17,16 @@
   position: absolute;
 }
 
+.bar-button
+{
+  position: absolute;
+
+  right: 2vh;
+}
+
 .show 
 {  
-  position: absolute;
+  display: inline-block;
   margin-top: 3vh;
   right: 2vw;
   background-color: #597906;
@@ -27,7 +34,6 @@
   padding: 1.5vw 2.8vw;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   border-radius: 45px;
   font-family: 'Roboto Mono';
   font-size: 2.2vh;

@@ -1,60 +1,169 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-    <link rel = "stylesheet" href = "../static/style-login.css">
     <title>View Financials</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel = "stylesheet" href = "../static/style-create-report-card.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity= "sha512vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous"></script>
 
 </head>
 <body>
-    <div class="main">
-        <div class = "container">
-            <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "img-logo">
-            <a href = "{{url_for('home')}}">go back</a>
-
+    <div class="nav-bar">
+        <img src = "http://taleemgah.arche-tech.com/img/logo.png" class = "logo" width = 220px>
+        <div class = "bar-button">
+          <a class = "show" href = "{{url_for('financial_records_homepage')}}">go back</a>
+          <a class = "show" href = "{{url_for('login')}}">Log Out</a>
         </div>
+    </div>
 
-
-        <div class ="rectangle">
+    <div class="body">
         {% if message %}
-                <p class = "message"> {{ message | safe }} </p>
+            <p class = "message"> {{ message | safe }} </p>
         {% endif %}
-    
-            <div class="form">
+
+        <div id ="loginform">
+            <div class="container">
                 <form action = "/financial_date_submit" method = "POST">
-                    <label>From</label>
+
+                    <!-- <label>From</label>
                     <input type="text"  name = 's_month'  value="{{start_month}}" readonly>
                     <input type="text"  name = 's_year' value = "{{start_year}}" readonly>
 
                     <label>To</label>
                     <input type="text" name = "e_month" value="{{end_month}}" readonly>
-                    <input type="text" name = "e_year" value = "{{end_year}}" readonly>
+                    <input type="text" name = "e_year" value = "{{end_year}}" readonly> -->
 
-                    <label>Inflow</label>
-                    {% for x in range(len_balance) %}
-                        {% if balance[x][2][1] > 0 %}
-                            <input type="text" name = "month" value ="{{balance[x][0]}}" readonly>
-                            <input type="text" name = "year" value = "{{balance[x][1]}}" readonly>
-
-                            <input type="text" name = "name" value = "{{balance[x][2][0]}}" readonly>
-                            <input type="text" name = "amount" value = "{{balance[x][2][1]}}" readonly>
-                        {% endif %}
-                    {% endfor %}
-
-                    <label>Outflow</label>
-                    {% for x in range(len_balance) %}
-                        {% if balance[x][2][1] < 0 %}
-                                        
-                            <input type="text" name = "month" value ="{{balance[x][0]}}" readonly>
-                            <input type="text" name = "year" value = "{{balance[x][1]}}" readonly>
-
-                            <input type="text" name = "name" value = "{{balance[x][2][0]}}" readonly>
-                            <input type="text" name = "amount" value = "{{balance[x][2][1]|abs}}" readonly>
+                    <label>From</label>
+                    <select name="add_financial_month" id="a_f_month" value = "{{start_month}}" placeholder = "Select Month" disabled>
+                        <option value="1">January</option>
+                        <option value="2">Febuary</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
                     
-                        {% endif %}
-                    {% endfor %}
-                    
-                    <label>Total</label>
-                    <input type="text" name ="total" value="{{balance[-1]}}" readonly>
+                    <select name="add_financial_year" id="a_f_year" value = "{{start_year}}" placeholder = "Select Year" disabled>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+
+                    <label>To</label>
+                    <select name="add_financial_month" id="a_f_month" value = "{{end_month}}" placeholder = "Select Month" disabled>
+                        <option value="1">January</option>
+                        <option value="2">Febuary</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+
+                    <select name="add_financial_year" id="a_f_year" value = "{{end_year}}" placeholder = "Select Year" disabled>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+
+                    <div class = "container2">
+
+                        <div class = "container3">
+                            {% if donationcount > 0 %}
+                                <label>Inflows</label>
+                                <div class = "container6">
+                                    {% for x in range(len_balance) %}
+                                        {% if balance[x][2][1] > 0 %}
+                                            <label>Month</label>
+                                            <select name="add_financial_month" id="a_f_month" value = "{{balance[x][0]}}" placeholder = "Select Month" disabled>
+                                                <option value="1">January</option>
+                                                <option value="2">Febuary</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+
+                                            <label>Year</label>
+                                            <select name="add_financial_year" id="a_f_year" value = "{{balance[x][1]}}" placeholder = "Select Year" disabled>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                            </select>
+
+                                            <input type="text" name = "name" value = "Name of Donation: {{balance[x][2][0]}}" readonly>
+                                            <input type="text" name = "amount" value = "Amount of Donation: {{balance[x][2][1]}}" readonly>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <label>No inflows recorded</label>
+                            {% endif %}
+                        </div>
+
+                        <div class = "container4">
+                            {% if expensecount > 0 %}
+                                <label>Outflows</label>
+                                <div class = "container5">
+                                    {% for x in range(len_balance) %}
+                                        {% if balance[x][2][1] < 0 %}
+                                            <label>Month</label>
+                                            <select name="add_financial_month" id="a_f_month" value = "{{balance[x][0]}}" placeholder = "Select Month" disabled>
+                                                <option value="1">January</option>
+                                                <option value="2">Febuary</option>
+                                                <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
+                                            </select>
+
+                                            <label>Year</label>
+                                            <select name="add_financial_year" id="a_f_year" value = "{{balance[x][1]}}" placeholder = "Select Year" disabled>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                            </select>
+
+                                            <input type="text" name = "name" value = "Name of Expense: {{balance[x][2][0]}}" readonly>
+                                            <input type="text" name = "amount" value = "Amount of Expense: {{balance[x][2][1]|abs}}" readonly>
+                                    
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                            {% else %}
+                                <label>No outflows recorded</label>
+                            {% endif %}
+                            
+                            <label>Total</label>
+                            <input type="text" name ="total" value="{{balance[-1]}}" readonly>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
