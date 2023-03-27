@@ -70,8 +70,11 @@ def submit():
 
                     cur.execute('SELECT FirstName, LastName from faculty where Username = %s AND Pass = %s', (user_name, password))
                     faculty_name = cur.fetchall()
-
-                    faculty_name_string = faculty_name[0][0] + ' ' + faculty_name[0][1]
+                    
+                    if faculty_name[0][1] != None:
+                        faculty_name_string = faculty_name[0][0] + ' ' + faculty_name[0][1]
+                    else:
+                        faculty_name_string = faculty_name[0][0]
 
                     # check if user is teacher or admin
                     cur.execute('SELECT faculty_type from faculty where Username = %s AND Pass = %s', (user_name, password))
