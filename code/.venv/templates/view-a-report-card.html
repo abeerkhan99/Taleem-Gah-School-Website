@@ -20,18 +20,18 @@
         <form action = "/edit-a-report-card" method = "POST" id = "form-print">
             <div class="info">
                 <label id = "result-label">First Name</label>
-                <input type="text"  name = 'student_firstname'  value="{{firstname}}">
+                <input type="text"  name = 'student_firstname'  value="{{firstname}}" readonly>
                 <label id = "result-label">Last Name</label>
-                <input type="text"  name = 'student_lastname'  value="{{lastname}}">
+                <input type="text"  name = 'student_lastname'  value="{{lastname}}" readonly>
                 <label id = "result-label">Class</label>
                 <input type="text"  name = 'classname'  value="{{classname}}" readonly>
                 <label id = "result-label">Semester</label>
                 <input type="text"  name = 'semestername'  value="Semester {{semestername}}" readonly>
     
                 <label id = "result-label">Total Working Days</label>
-                <input type="number"  name = 'totalworkingdays'  value = {{attendance[0][0]}}>
+                <input type="number"  name = 'totalworkingdays'  value = {{attendance[0][0]}} readonly>
                 <label id = "result-label">Attendance</label>
-                <input type="number"  name = 'studentattendance' value = {{attendance[0][1]}}>
+                <input type="number"  name = 'studentattendance' value = {{attendance[0][1]}} readonly>
     
                 <br>
     
