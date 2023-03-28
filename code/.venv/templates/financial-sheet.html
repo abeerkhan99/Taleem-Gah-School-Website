@@ -28,7 +28,7 @@
             <div class="container">
                 <form action = "/financial_date_submit" method = "POST">
                     <label>From</label>
-                    <select name="start_financial_month" id="s_f_month" placeholder = "Select Month">
+                    <select name="start_financial_month" id="s_f_month" placeholder = "Select Month" required>
                         <option value="1">January</option>
                         <option value="2">Febuary</option>
                         <option value="3">March</option>
@@ -43,14 +43,14 @@
                         <option value="12">December</option>
                     </select>
                     
-                    <select name="start_financial_year" id="s_f_year" placeholder = "Select Year">
+                    <select name="start_financial_year" id="s_f_year" placeholder = "Select Year" required>
                         {% for y in year %}
                         <option value = "{{y}}">{{y}}</option>
                         {% endfor %}
                     </select>
                     
                     <label>To</label>
-                    <select name="end_financial_month" id="e_f_month" placeholder = "Select Month">
+                    <select name="end_financial_month" id="e_f_month" placeholder = "Select Month" required>
                         <option value="1">January</option>
                         <option value="2">Febuary</option>
                         <option value="3">March</option>
@@ -65,7 +65,7 @@
                         <option value="12">December</option>
                     </select>
                     
-                    <select name="end_financial_year" id="e_f_year" placeholder = "Select Year">
+                    <select name="end_financial_year" id="e_f_year" placeholder = "Select Year" required>
                         {% for y in year %}
                         <option value = "{{y}}"></option>
                         {% endfor %}
