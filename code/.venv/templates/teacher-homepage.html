@@ -9,7 +9,7 @@
 <body>
     <div class = "nav-bar">
         <img src = "../static/taleem-gah logo.png" class = "logo" width = 220px>
-        <a class = "show" href = "{{url_for('login')}}">Log Out</a>
+        <a class = "show" href = "{{url_for('logout')}}">Log Out</a>
 
         <div class = "rectangle">
             {% if session['user_info_name'] %}
