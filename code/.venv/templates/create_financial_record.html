@@ -27,7 +27,7 @@
             <div class="container">
                 <form action = "/create-financials-submit" method = "POST">
                     <label>Choose Month</label>
-                    <select name="add_financial_month" id="a_f_month" placeholder = "Select Month">
+                    <select name="add_financial_month" id="a_f_month" placeholder = "Select Month" required>
                         <option value="1">January</option>
                         <option value="2">Febuary</option>
                         <option value="3">March</option>
@@ -43,14 +43,10 @@
                     </select>
                     
                     <label>Choose Year</label>
-                    <select name="add_financial_year" id="a_f_year" placeholder = "Select Year">
+                    <select name="add_financial_year" id="a_f_year" placeholder = "Select Year" required>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        
                     </select>
                     
                     <div class = "container2">
@@ -62,8 +58,8 @@
                       <a id = "link2" class="donation-btn" href = "javascript:textboxDelete_donor()">Delete Donation</a>
                     </div>
 
-                    <input type = "text" id = "name_donation" name = "name_donation">
-                    <input type = "text" id = "donation_amount" name = "donation_amount">
+                    <input type = "text" id = "name_donation" name = "name_donation" placeholder="Name of Donor">
+                    <input type = "text" id = "donation_amount" name = "donation_amount" placeholder="Donation Amount">
 
                     <div id="donor-box"></div>   
                     
@@ -74,8 +70,8 @@
                     </div>
                     
 
-                    <input type = "text" id = "name_expense" name = "name_expense">
-                    <input type = "text" id = "expense_amount" name = "expense_amount">
+                    <input type = "text" id = "name_expense" name = "name_expense" placeholder="Name of Expense">
+                    <input type = "text" id = "expense_amount" name = "expense_amount" placeholder="Expense Amount">
 
                     <div id="expense-box"></div>
                     
@@ -103,13 +99,13 @@
         {
             var d_box = document.createElement("INPUT");
             d_box.setAttribute("type", "text");
-            d_box.setAttribute("placeholder", "name of donor");
+            d_box.setAttribute("placeholder", "Name of Donor");
             d_box.setAttribute("id", d_name.toString());
             d_box.setAttribute("name", d_name.toString());
 
             var d_box_amount = document.createElement("INPUT");
             d_box_amount.setAttribute("type", "text");
-            d_box_amount.setAttribute("placeholder", "donation amount");
+            d_box_amount.setAttribute("placeholder", "Donation Amount");
             d_box_amount.setAttribute("id", d_amount.toString());
             d_box_amount.setAttribute("name", d_amount.toString());
 
@@ -124,14 +120,14 @@
         {
             var e_box = document.createElement("INPUT");
             e_box.setAttribute("type", "text");
-            e_box.setAttribute("placeholder", "name of expense");
+            e_box.setAttribute("placeholder", "Name of Expense");
             e_box.setAttribute("id", e_name.toString());
             e_box.setAttribute("name", e_name.toString());
 
 
             var e_box_amount = document.createElement("INPUT");
             e_box_amount.setAttribute("type", "text");
-            e_box_amount.setAttribute("placeholder", "expense amount");
+            e_box_amount.setAttribute("placeholder", "Expense Amount");
             e_box_amount.setAttribute("id", e_amount.toString());
             e_box_amount.setAttribute("name", e_amount.toString());
 
