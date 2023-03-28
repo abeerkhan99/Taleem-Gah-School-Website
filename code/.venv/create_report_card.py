@@ -71,6 +71,7 @@ def create_a_report_card_submit():
             studentfirst = request.form['student_firstname']
             studentlast = request.form['student_lastname']
             classname = request.form['classname']
+            semestername = request.form['semestername'][-1]
             total_working = request.form['totalworkingdays']
             s_attendance = request.form['studentattendance']
 
@@ -96,13 +97,13 @@ def create_a_report_card_submit():
             for x in total_marks:
                 # check if information is already in the database
                 cur.execute('SELECT count(*) from marks WHERE FirstName = %s and LastName = %s and class_Name = %s and subject_Name = %s and semester_Name = %s and Marks = %s and Passing_Marks = %s and Total_Marks = %s',
-                            (studentfirst, studentlast, classname, x[0], session.get('semestername'), x[1], x[2], x[3],))
+                            (studentfirst, studentlast, classname, x[0], semestername, x[1], x[2], x[3],))
                 mark_exist = cur.fetchall()
 
                 if mark_exist[0][0] == 0:
                     # add info in database
                     cur.execute('INSERT INTO marks (FirstName, LastName, class_Name, semester_Name, subject_Name, Total_Marks, Passing_Marks, Marks) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                                (studentfirst, studentlast, classname, session.get('semestername'), x[0], x[3], x[2], x[1]))
+                                (studentfirst, studentlast, classname, semestername, x[0], x[3], x[2], x[1],))
                     conn.commit()
 
                 elif mark_exist[0][0] != 0:
@@ -110,25 +111,25 @@ def create_a_report_card_submit():
                     # have a view report card option
                     # update info in database
                     cur.execute('UPDATE marks SET Total_Marks = %s, Passing_Marks = %s, Marks = %s WHERE FirstName = %s and LastName = %s and class_Name = %s and semester_Name = %s and subject_Name = %s', 
-                            (x[3], x[2], x[1], studentfirst, studentlast, classname, session.get('semestername'), x[0],))
+                            (x[3], x[2], x[1], studentfirst, studentlast, classname, semestername, x[0],))
                     conn.commit()
 
 
             # add attendance
             # check if information is already in the database
-            cur.execute('SELECT count(*) from student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s', (studentfirst, studentlast, classname, session.get('semestername')))
+            cur.execute('SELECT count(*) from student_has_attendance WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s', (studentfirst, studentlast, classname, semestername))
             attendance_data_object = cur.fetchall()
 
             #if information exists, then overwrite information in the database
             if attendance_data_object[0][0] == 0:
                 cur.execute('INSERT into student_has_attendance(FirstName, LastName, class_classesName, semester_semesterName, totalWorkingDays, student_attendance) VALUES (%s,%s,%s,%s,%s,%s)', 
-                            (studentfirst, studentlast, classname,  session.get('semestername'), total_working, s_attendance,))
+                            (studentfirst, studentlast, classname, semestername, total_working, s_attendance,))
                 conn.commit()
             
             # overwrite
             elif attendance_data_object[0][0] != 0:
                 cur.execute('UPDATE student_has_attendance SET totalWorkingDays = %s, student_attendance = %s WHERE FirstName = %s and LastName = %s and class_classesName = %s and semester_semesterName = %s',
-                            (total_working, s_attendance, studentfirst, studentlast, classname, session.get('semestername'),))
+                            (total_working, s_attendance, studentfirst, studentlast, classname, semestername,))
                 conn.commit()
             
             message = "Report card generated! Would you like to generate another one?"
