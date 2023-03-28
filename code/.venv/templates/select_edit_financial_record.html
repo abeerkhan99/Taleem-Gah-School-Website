@@ -27,7 +27,7 @@
             <div class="container">
                 <form action = "/edit-financials" method = "POST">
                     <label>Select Month</label>
-                    <select name="start_financial_month_edit" id="s_f_month" placeholder = "Select Month">
+                    <select name="start_financial_month_edit" id="s_f_month" placeholder = "Select Month" required>
                         <option value="1">January</option>
                         <option value="2">Febuary</option>
                         <option value="3">March</option>
@@ -43,7 +43,7 @@
                     </select>
                     
                     <label>Select Year</label>
-                    <select name="start_financial_year_edit" id="s_f_year" placeholder = "Select Year">
+                    <select name="start_financial_year_edit" id="s_f_year" placeholder = "Select Year" required>
                         {% for y in year %}
                         <option value = "{{y}}">{{y}}</option>
                         {% endfor %}
