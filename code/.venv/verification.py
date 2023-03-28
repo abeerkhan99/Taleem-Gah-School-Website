@@ -24,25 +24,17 @@ def verify():
 def verify_submit():
     if request.method == 'POST':
         user_name = request.form['u_name']
-        user_number = request.form['u_number']
 
-        cur.execute('SELECT Username from faculty where Username = %s and PhoneNo = %s', (user_name, user_number,))
+        cur.execute('SELECT Username from faculty where Username = %s', (user_name,))
         user_name_object = cur.fetchall()
 
-        cur.execute('SELECT PhoneNo from faculty where Username = %s and PhoneNo = %s', (user_name, user_number,))
-        user_number_object = cur.fetchall()
-
-        # check if username and number exists 
-        if len(user_name_object) != 0 and len(user_number_object) != 0:
+        # check if username  exists 
+        if len(user_name_object) != 0:
 
             user_name_item = user_name_object.pop()
             user_name_string = ''.join(user_name_item)
 
-            user_number_item = user_number_object.pop()
-            user_number_string = ''.join(user_number_item)
-
             session['reset_u_name'] = user_name_string
-            session['reset_u_number'] = user_number_string
 
             return redirect(url_for('reset_pass'))
         else:
@@ -58,22 +50,21 @@ def reset_pass():
 
 @app.route('/reset-submit', methods = ['GET', 'POST'])
 def reset_pass_submit():
-    if len(session.get('reset_u_name')) != 0 and len(session.get('reset_u_number')) != 0:
+    if len(session.get('reset_u_name')) != 0:
 
         if request.method == 'POST':
             user_new_pass = request.form['new_pass']
 
             # alter table details
-            cur.execute("UPDATE faculty SET Pass = %s WHERE Username = %s AND PhoneNo = %s", (user_new_pass, session.get('reset_u_name'), session.get('reset_u_number'),))
+            cur.execute("UPDATE faculty SET Pass = %s WHERE Username = %s", (user_new_pass, session.get('reset_u_name'),))
             
             # save changes to database
             conn.commit()
 
             # clear session data
             session.pop('reset_u_name', default=None)
-            session.pop('reset_u_number', default=None)
 
             return render_template('reset-pass.html', message = "Password changed. You may log in now with the new password.")
     else:
-        return redirect(url_for('verify'))
+        return redirect(url_for('verify', message = "Try Again"))
 
