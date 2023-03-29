@@ -1,5 +1,6 @@
 from fpdf import FPDF
 from numpy import mean
+from flask import send_file
 
 class my_pdf:
 
@@ -30,7 +31,7 @@ class my_pdf:
         self.sig()
         
         self.pdf.output(path_name, 'F')
-        return
+        return send_file(path_name, as_attachment=True)
 
     def initialize_pdf(self):
         self.pdf.add_page('L')
