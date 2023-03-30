@@ -31,7 +31,7 @@ class my_pdf:
         self.sig()
         
         self.pdf.output(path_name, 'F')
-        return send_file(path_name, as_attachment=True)
+        return
 
     def initialize_pdf(self):
         self.pdf.add_page('L')
