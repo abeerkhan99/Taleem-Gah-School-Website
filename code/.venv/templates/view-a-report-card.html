@@ -133,10 +133,13 @@
     </script>
 
     <script>
-        function on_clickevent(){
-            $.ajax({
-                url:"/generate-pdf",
-                context: document.body});}
+        function on_clickevent()
+        {
+            window.location.href = "/generate-pdf";
+//             $.ajax({
+//                 url:"/generate-pdf",
+//                 context: document.body});
+        }
     </script>
 
 </body>
