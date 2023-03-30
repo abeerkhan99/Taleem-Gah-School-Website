@@ -187,4 +187,6 @@ def generate_pdf():
     path_name = session.get('first_name') + '-' + session.get('last_name') + '-' + session.get('class_name') + '-' + 'Semester ' + session.get('semester_name') + '.pdf'
 
     my_pdf(subjects, marksObtained, passingMarks, totalMarks, full_name, student_attendance, working_days, session.get('class_name'), session.get('semester_name'), path_name, overall_percentage)
-    return 
+    abs_path = os.path.abspath(path_name)
+    print(abs_path)
+    return send_file(abs_path, as_attachment=True)
