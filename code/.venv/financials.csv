@@ -1,7 +1,5 @@
-Entry: 2022-07
-Donor 1,1000
-Donor 11,1
-Donor 7,10000
-Entry: 2001-01
-Donor 3,200
-Donor 5,300
+Entry: 2020-01
+
+expense 1,-200
+
+expense 2,-100
