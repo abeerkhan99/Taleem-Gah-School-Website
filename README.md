@@ -1,11 +1,7 @@
 # About the Project
 
-The project is to make a website for Taleem Gah - a school for underprivileged children. The school
-has bottlenecks with dealing with students' grades and assessing the institution's finances, due to their
-records being kept on paper, therefore the aim is to help the school with this website project. The
-website will include a financial account, where their budget and donors can be reviewed, as well as an
-academic account, where teachers and administrators will be able to view and input students’ grades
-to generate student performance reports.
+The objective of this project is to create a website for Taleem Gah, a school that provides education to underprivileged children. The school faces challenges in managing students’ grades and assessing its financial situation, primarily because their records are maintained on paper. This has led to inefficiencies in record-keeping, as well as difficulties in tracking and analyzing financial data and student performance. To address these issues, a proposed website has been developed with two main components. The first component is a financial module that enables the school to review its expenses and donors. This feature allows the school to make informed decisions regarding financial matters. The second component is an academic module that allows teachers and administrators to input and view students’ grades. This feature is intended to provide updates on student performance and enable the generation of student performance reports. This project was completed remotely, with communication established through either Whatsapp or email. Despite the challenges of remote work, the team was able to effectively collaborate
+and deliver a high-quality product. The website is now live and accessible via this link: https://taleem-gah-school.onrender.com. The back-end functionality of the website is implemented using Flask, a Python web framework that provides a robust set of tools for building web applications. The front-end functionality is implemented using HTML/CSS/JavaScript, which provides an intuitive and user-friendly interface.
 
 ### Team Information
 
